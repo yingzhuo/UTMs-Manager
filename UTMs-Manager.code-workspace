@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"ansible.python.interpreterPath": "/opt/homebrew/bin/python3",
+		"ansible.validation.enabled": false,
+		"ansible.validation.lint.enabled": false,
+		"makefile.configureOnOpen": true
+	}
+}

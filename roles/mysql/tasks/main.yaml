@@ -1,0 +1,19 @@
+- name: "拷贝配置文件"
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "/etc/mysql/mysql.conf.d/{{ item }}"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  with_items:
+    - mysqld.cnf
+    - mysql.cnf
+  notify:
+    - "重启MySQL服务"
+
+- name: "更新管理账户属组"
+  ansible.builtin.user:
+    name: yingzhuo
+    groups:
+      - mysql
+    append: true

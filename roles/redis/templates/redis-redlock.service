@@ -1,0 +1,15 @@
+[Unit]
+Description=Redis (redlock)
+Documentation=https://redis.io/docs/
+After=syslog.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/opt/redis/bin/redis-server /opt/redis/etc/redis-redlock.conf
+KillSignal=15
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

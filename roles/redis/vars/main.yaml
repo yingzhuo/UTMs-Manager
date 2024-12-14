@@ -1,0 +1,18 @@
+# 第一个实例
+instance1:
+  port: 6379
+  service: redis-6379
+
+# 第二个实例
+instance2:
+  port: 6380
+  service: redis-6380
+
+# 红锁服务
+redlock:
+  port: 7000
+  service: redis-redlock
+
+# 通用
+common:
+  password: "redis"

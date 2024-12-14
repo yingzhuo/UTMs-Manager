@@ -1,0 +1,5 @@
+- name: "重启MySQL服务"
+  ansible.builtin.service:
+    name: mysql
+    state: restarted
+    enabled: true

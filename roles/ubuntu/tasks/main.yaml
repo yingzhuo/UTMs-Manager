@@ -1,0 +1,26 @@
+- name: "安装必要的软件"
+  ansible.builtin.apt:
+    name:
+      - make
+      - automake
+      - autoconf
+      - gcc
+      - g++
+      - zsh
+      - net-tools
+      - wget
+      - curl
+      - cowsay
+      - figlet
+      - zip
+      - unzip
+      - libncurses5-dev
+      - libncursesw5-dev
+      - sysstat
+    state: present
+
+- name: "配置/tmp目录权限"
+  ansible.builtin.file:
+    name: /tmp/
+    mode: "777"
+    state: directory

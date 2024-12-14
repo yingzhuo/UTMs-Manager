@@ -1,0 +1,10 @@
+# 常规
+**/.DS_Store
+
+# 测试用文件
+**/TestPlaybook.yaml
+**/TestPlaybook.yml
+
+# 临时性文件
+**/*.tmp
+**/*.bak

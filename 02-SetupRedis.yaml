@@ -1,0 +1,5 @@
+- name: "安装Redis集群"
+  hosts: redis
+  gather_facts: false
+  roles:
+    - redis

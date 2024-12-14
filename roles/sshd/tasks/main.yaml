@@ -1,0 +1,14 @@
+- name: "安装OpenSSH"
+  ansible.builtin.apt:
+    name: "openssh-server"
+    state: present
+
+- name: "拷贝配置文件"
+  ansible.builtin.template:
+    src: sshd_config
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  notify:
+    - "重启sshd服务"
