@@ -2,8 +2,7 @@
 **/.DS_Store
 
 # 测试用文件
-**/TestPlaybook.yaml
-**/TestPlaybook.yml
+**/PB-Test.yaml
 **/roles/x/**
 
 # 临时性文件
