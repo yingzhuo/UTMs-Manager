@@ -90,6 +90,8 @@
     - "重启红锁服务"
   tags: setup
 
+###############################################################################
+
 - name: "停止Redis所有节点"
   ansible.builtin.service:
     name: "{{ item }}"
@@ -101,6 +103,8 @@
     - "{{ redlock.service }}"
   tags: stop
 
+###############################################################################
+
 - name: "开启Redis所有节点"
   ansible.builtin.service:
     name: "{{ item }}"
@@ -110,4 +114,17 @@
     - "{{ instance1.service }}"
     - "{{ instance2.service }}"
     - "{{ redlock.service }}"
-  tags: startup 
+  tags: startup
+
+###############################################################################
+
+- name: "重启Redis所有节点"
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: restarted
+    enabled: true
+  loop:
+    - "{{ instance1.service }}"
+    - "{{ instance2.service }}"
+    - "{{ redlock.service }}"
+  tags: restart

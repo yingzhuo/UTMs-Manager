@@ -1,19 +1,23 @@
 ===========================================================
 杂项:
-    make usage            => 显示本菜单"
+    make usage            => 显示本菜单
 
 测试:
-    make ping             => ping"
+    make ping             => ping
 
 MySQL:
-    make setup-mysql      => 配置MySQL服务"
+    make startup-mysql    => 开启所有MySQL服务
+    make stop-mysql       => 关闭所有MySQL服务
+    make setup-mysql      => 配置MySQL服务
+    make restart-mysql    => 重启所有MySQL服务
 
 Redis:
     make startup-redis    => 开启所有Redis服务
     make stop-redis       => 关闭所有Redis服务
-    make setup-redis      => 配置Reids服务"
+    make setup-redis      => 配置Reids服务
+    make restart-redis    => 重启所有Redis服务
 
 OS:
-    make setup-ssh        => 配置SSH服务"
-    make setup-ubuntu     => 配置Ubuntu系统"
+    make setup-ssh        => 配置SSH服务
+    make setup-ubuntu     => 配置Ubuntu系统
 ===========================================================

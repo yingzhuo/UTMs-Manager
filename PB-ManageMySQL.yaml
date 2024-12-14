@@ -1,4 +1,4 @@
-- name: "配置MySQL服务"
+- name: "管理MySQL服务"
   hosts: mysql
   gather_facts: false
   roles:
