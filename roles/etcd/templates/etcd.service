@@ -1,0 +1,25 @@
+[Unit]
+Description=ETCD
+Documentation=https://etcd.io/docs/
+After=syslog.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+
+ExecStart=/opt/etcd/etcd \
+    --data-dir=/opt-data/etcd/ \
+    --name {{ ip_2_machine_name_dict[ansible_host] }} \
+	--initial-advertise-peer-urls http://{{ ansible_host }}:2380 \
+    --listen-peer-urls http://{{ ansible_host }}:2380 \
+	--advertise-client-urls http://{{ ansible_host }}:2379 \
+    --listen-client-urls http://{{ ansible_host }}:2379 \
+	--initial-cluster machine-1=http://{{ ip_list[0] }}:2380,machine-2=http://{{ ip_list[1] }}:2380,machine-3=http://{{ ip_list[2] }}:2380 \
+	--initial-cluster-state new \
+    --initial-cluster-token {{ cluster_token }}
+KillSignal=15
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,5 @@
+- name: "管理ETCD服务"
+  hosts: etcd
+  gather_facts: false
+  roles:
+    - role: etcd

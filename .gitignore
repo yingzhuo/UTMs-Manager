@@ -4,6 +4,8 @@
 # 测试用文件
 **/PB-Test.yaml
 **/roles/x/**
+**/test.sh
+**/test
 
 # 临时性文件
 **/*.tmp

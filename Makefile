@@ -3,6 +3,7 @@ usage:
 
 github:
 	@find $(CURDIR) -name '.DS_Store' -delete
+	@echo "" > $(CURDIR)/PB-Test.yaml
 	@git add .
 	@git commit -m "$(shell /bin/date "+%F %T")"
 	@git push
@@ -41,21 +42,34 @@ setup-ubuntu:
 	@ansible-playbook $(CURDIR)/PB-SetupUbuntu.yaml
 
 setup-docker:
-	@ansible-playbook $(CURDIR)/PB-ManagerDocker.yaml --tags setup
+	@ansible-playbook $(CURDIR)/PB-ManageDocker.yaml --tags setup
 
 startup-docker:
-	@ansible-playbook $(CURDIR)/PB-ManagerDocker.yaml --tags startup
+	@ansible-playbook $(CURDIR)/PB-ManageDocker.yaml --tags startup
 
 stop-docker:
-	@ansible-playbook $(CURDIR)/PB-ManagerDocker.yaml --tags stop
+	@ansible-playbook $(CURDIR)/PB-ManageDocker.yaml --tags stop
 
 restart-docker:
-	@ansible-playbook $(CURDIR)/PB-ManagerDocker.yaml --tags restart
+	@ansible-playbook $(CURDIR)/PB-ManageDocker.yaml --tags restart
+
+setup-etcd:
+	@ansible-playbook $(CURDIR)/PB-ManageETCD.yaml --tags setup
+
+startup-etcd:
+	@ansible-playbook $(CURDIR)/PB-ManageETCD.yaml --tags startup
+
+stop-etcd:
+	@ansible-playbook $(CURDIR)/PB-ManageETCD.yaml --tags stop
+
+restart-etcd:
+	@ansible-playbook $(CURDIR)/PB-ManageETCD.yaml --tags restart
 
 .PHONY: usage github \
 	ping \
 	setup-mysql startup-mysql stop-mysql restart-mysql \
 	setup-redis startup-redis stop-redis restart-redis \
 	setup-docker startup-docker stop-docker restart-docker \
+	setup-etcd startup-etcd stop-etcd restart-etcd \
 	setup-ssh \
 	setup-ubuntu

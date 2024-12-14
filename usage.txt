@@ -2,7 +2,7 @@
 菜单:
     make usage            => 显示本菜单
 
-测试:
+杂项:
     make ping             => ping
 
 Docker:
@@ -22,6 +22,12 @@ Redis:
     make stop-redis       => 关闭Redis服务
     make setup-redis      => 配置Reids服务
     make restart-redis    => 重启Redis服务
+
+ETCD:
+    make startup-etcd     => 开启ETCD服务
+    make stop-etcd        => 关闭ETCD服务
+    make setup-etcd       => 配置ETCD服务
+    make restart-etcd     => 重启ETCD服务
 
 OS:
     make setup-ssh        => 配置SSH服务

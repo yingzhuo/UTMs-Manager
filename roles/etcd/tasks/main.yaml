@@ -1,0 +1,38 @@
+- name: "拷贝服务定义文件"
+  ansible.builtin.template:
+    src: etcd.service
+    dest: /etc/systemd/system/etcd.service
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  notify:
+    - "重加载所有服务"
+    - "重启ETCD服务"
+  tags: setup
+
+###############################################################################
+
+- name: "停止ETCD服务"
+  ansible.builtin.service:
+    name: etcd
+    state: stopped
+    enabled: false
+  tags: stop
+
+###############################################################################
+
+- name: "启动ETCD服务"
+  ansible.builtin.service:
+    name: etcd
+    state: started
+    enabled: true
+  tags: startup
+
+###############################################################################
+
+- name: "重启ETCD服务"
+  ansible.builtin.service:
+    name: etcd
+    state: restarted
+    enabled: true
+  tags: restart
