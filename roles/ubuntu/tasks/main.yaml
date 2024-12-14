@@ -33,3 +33,7 @@
     owner: yingzhuo
     group: yingzhuo
     mode: "u=rwx,g=rwx,o=rx"
+
+- name: "配置防火墙"
+  community.general.ufw:
+    state: disabled
