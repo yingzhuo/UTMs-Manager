@@ -1,7 +1,3 @@
-etcd_dir:
-  install: "/opt/etcd/"
-  data: "/opt-data/etcd/"
-
 ip_2_machine_name_dict:
   "192.168.31.165": "machine-1"
   "192.168.31.166": "machine-2"

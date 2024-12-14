@@ -32,5 +32,4 @@ ETCD:
 OS:
     make setup-ssh        => 配置SSH服务
     make setup-ubuntu     => 配置Ubuntu系统
-
 ===========================================================

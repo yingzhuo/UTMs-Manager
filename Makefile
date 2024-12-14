@@ -3,7 +3,7 @@ usage:
 
 github:
 	@find $(CURDIR) -name '.DS_Store' -delete
-	@echo "" > $(CURDIR)/PB-Test.yaml
+	@echo -n "" > $(CURDIR)/PB-Test.yaml
 	@git add .
 	@git commit -m "$(shell /bin/date "+%F %T")"
 	@git push
