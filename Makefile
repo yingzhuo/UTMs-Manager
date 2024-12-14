@@ -1,14 +1,5 @@
 usage:
-	@echo "=============================================================="
-	@echo "usage (default)  => 显示本菜单"
-	@echo "github           => 提交本项目"
-	@echo ""
-	@echo "ping             => ping"
-	@echo "setup-mysql      => 配置MySQL服务"
-	@echo "setup-redis      => 配置Reids服务"
-	@echo "setup-ssh        => 配置SSH服务"
-	@echo "setup-ubuntu     => 配置Ubuntu系统"
-	@echo "=============================================================="
+	@cat $(CURDIR)/usage.txt
 
 github:
 	@find $(CURDIR) -name '.DS_Store' -delete
@@ -23,7 +14,13 @@ setup-mysql:
 	@ansible-playbook $(CURDIR)/01-SetupMySQL.yaml
 
 setup-redis:
-	@ansible-playbook $(CURDIR)/02-SetupRedis.yaml
+	@ansible-playbook $(CURDIR)/02-SetupRedis.yaml --tags setup
+
+startup-redis:
+	@ansible-playbook $(CURDIR)/02-SetupRedis.yaml --tags startup
+
+stop-redis:
+	@ansible-playbook $(CURDIR)/02-SetupRedis.yaml --tags stop
 
 setup-ssh:
 	@ansible-playbook $(CURDIR)/98-SetupSSH.yaml
@@ -34,6 +31,6 @@ setup-ubuntu:
 .PHONY: usage github \
 	ping \
 	setup-mysql \
-	setup-redis \
+	setup-redis startup-redis stop-redis \
 	setup-ssh \
 	setup-ubuntu

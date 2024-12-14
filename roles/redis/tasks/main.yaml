@@ -1,6 +1,3 @@
-# -----------------
-# 内核参数
-# -----------------
 - name: "调整内核参数"
   ansible.posix.sysctl:
     name: "vm.overcommit_memory"
@@ -10,10 +7,8 @@
   notify:
     - "重启Instance1服务"
     - "重启Instance2服务"
+  tags: setup
 
-# -----------------
-# 公共
-# -----------------
 - name: "拷贝公共配置文件"
   ansible.builtin.template:
     src: redis-included.conf
@@ -24,10 +19,8 @@
   notify:
     - "重启Instance1服务"
     - "重启Instance2服务"
+  tags: setup
 
-# -----------------
-# 集群 Instance1
-# -----------------
 - name: "拷贝Instance1配置文件"
   ansible.builtin.template:
     src: redis-instance1.conf
@@ -37,6 +30,7 @@
     mode: "u=rw,g=r,o=r"
   notify:
     - "重启Instance1服务"
+  tags: setup
 
 - name: "拷贝Instance1服务定义文件"
   ansible.builtin.template:
@@ -48,10 +42,8 @@
   notify:
     - "重加载所有服务"
     - "重启Instance1服务"
+  tags: setup
 
-# -----------------
-# 集群 Instance2
-# -----------------
 - name: "拷贝Instance2配置文件"
   ansible.builtin.template:
     src: redis-instance2.conf
@@ -61,6 +53,7 @@
     mode: "u=rw,g=r,o=r"
   notify:
     - "重启Instance2服务"
+  tags: setup
 
 - name: "拷贝Instance2服务定义文件"
   ansible.builtin.template:
@@ -72,10 +65,8 @@
   notify:
     - "重加载所有服务"
     - "重启Instance2服务"
+  tags: setup
 
-# -----------------
-# 红锁
-# -----------------
 - name: "拷贝红锁服务配置文件"
   ansible.builtin.template:
     src: redis-redlock.conf
@@ -85,6 +76,7 @@
     mode: "u=rw,g=r,o=r"
   notify:
     - "重启红锁服务"
+  tags: setup
 
 - name: "拷贝红锁服务定义文件"
   ansible.builtin.template:
@@ -96,3 +88,26 @@
   notify:
     - "重加载所有服务"
     - "重启红锁服务"
+  tags: setup
+
+- name: "停止Redis所有节点"
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: stopped
+    enabled: false
+  loop:
+    - "{{ instance1.service }}"
+    - "{{ instance2.service }}"
+    - "{{ redlock.service }}"
+  tags: stop
+
+- name: "开启Redis所有节点"
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - "{{ instance1.service }}"
+    - "{{ instance2.service }}"
+    - "{{ redlock.service }}"
+  tags: startup 

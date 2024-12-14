@@ -1,5 +1,5 @@
-- name: "安装Redis集群"
+- name: "管理Redis多个节点"
   hosts: redis
   gather_facts: false
   roles:
-    - redis
+    - role: redis

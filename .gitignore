@@ -4,6 +4,7 @@
 # 测试用文件
 **/TestPlaybook.yaml
 **/TestPlaybook.yml
+**/roles/x/**
 
 # 临时性文件
 **/*.tmp

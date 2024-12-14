@@ -2,4 +2,4 @@
   hosts: mysql
   gather_facts: false
   roles:
-    - mysql
+    - role: mysql
