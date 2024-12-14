@@ -1,0 +1,5 @@
+- name: "重启docker服务"
+  ansible.builtin.service:
+    name: docker
+    state: restarted
+    enabled: true

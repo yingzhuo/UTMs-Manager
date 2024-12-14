@@ -40,9 +40,22 @@ setup-ssh:
 setup-ubuntu:
 	@ansible-playbook $(CURDIR)/PB-SetupUbuntu.yaml
 
+setup-docker:
+	@ansible-playbook $(CURDIR)/PB-ManagerDocker.yaml --tags setup
+
+startup-docker:
+	@ansible-playbook $(CURDIR)/PB-ManagerDocker.yaml --tags startup
+
+stop-docker:
+	@ansible-playbook $(CURDIR)/PB-ManagerDocker.yaml --tags stop
+
+restart-docker:
+	@ansible-playbook $(CURDIR)/PB-ManagerDocker.yaml --tags restart
+
 .PHONY: usage github \
 	ping \
 	setup-mysql startup-mysql stop-mysql restart-mysql \
 	setup-redis startup-redis stop-redis restart-redis \
+	setup-docker startup-docker stop-docker restart-docker \
 	setup-ssh \
 	setup-ubuntu
