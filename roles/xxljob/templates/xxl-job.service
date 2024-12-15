@@ -14,7 +14,8 @@ ExecStart=/opt/java-home/bin/java \
     --spring.datasource.username="{{ db.username }}" \
     --spring.datasource.password="{{ db.password }}" \
     --server.port={{ server.port }} \
-    --xxl.job.accessToken="{{ server.access_token }}" \
+    --server.servlet.context-path="{{ server.servlet_context_path }}"
+    --xxl.job.accessToken="{{ security.access_token }}" \
     --xxl.job.i18n=zh_CN
 
 KillSignal=15

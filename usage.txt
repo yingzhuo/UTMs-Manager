@@ -31,6 +31,12 @@ ETCD:
     make setup-etcd       => 配置ETCD服务
     make restart-etcd     => 重启ETCD服务
 
+xxl-job:
+    make startup-xxljob   => 启动xxl-job服务
+    make stop-xxljob      => 停止xxl-job服务
+    make setup-xxljob     => 配置xxl-job服务
+    make restart-xxljob   => 重启xxl-job服务
+
 OS:
     make setup-ssh        => 配置SSH服务
     make setup-ubuntu     => 配置Ubuntu系统

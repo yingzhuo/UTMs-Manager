@@ -18,3 +18,30 @@
   notify:
     - "重加载所有服务"
     - "重启xxl-job服务"
+
+###############################################################################
+
+- name: "关闭xxl-job服务"
+  ansible.builtin.service:
+    name: xxl-job
+    state: stopped
+    enabled: false
+  tags: stop
+
+###############################################################################
+
+- name: "启动xxl-job服务"
+  ansible.builtin.service:
+    name: xxl-job
+    state: started
+    enabled: true
+  tags: startup
+
+###############################################################################
+
+- name: "重启xxl-job服务"
+  ansible.builtin.service:
+    name: xxl-job
+    state: restarted
+    enabled: true
+  tags: restart

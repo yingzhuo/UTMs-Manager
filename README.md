@@ -4,39 +4,8 @@
 
 ## 如何使用
 
-```
-===========================================================
-杂项:
-    make ping             => ping
-
-Docker:
-    make startup-docker   => 启动Dockker服务
-    make stop-docker      => 关闭Docker服务
-    make setup-docker     => 配置Docker服务
-    make restart-docker   => 重启Docker服务
-
-MySQL:
-    make startup-mysql    => 开启MySQL服务
-    make stop-mysql       => 关闭MySQL服务
-    make setup-mysql      => 配置MySQL服务
-    make restart-mysql    => 重启MySQL服务
-
-Redis:
-    make startup-redis    => 开启Redis服务
-    make stop-redis       => 关闭Redis服务
-    make setup-redis      => 配置Reids服务
-    make restart-redis    => 重启Redis服务
-
-ETCD:
-    make startup-etcd     => 开启ETCD服务
-    make stop-etcd        => 关闭ETCD服务
-    make setup-etcd       => 配置ETCD服务
-    make restart-etcd     => 重启ETCD服务
-
-OS:
-    make setup-ssh        => 配置SSH服务
-    make setup-ubuntu     => 配置Ubuntu系统
-===========================================================
+```bash
+make usage
 ```
 
 ## 操作系统
