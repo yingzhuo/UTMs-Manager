@@ -1,7 +1,7 @@
-- name: "安装OpenSSH"
-  ansible.builtin.apt:
-    name: "openssh-server"
-    state: present
+# - name: "安装OpenSSH"
+#   ansible.builtin.apt:
+#     name: "openssh-server"
+#     state: present
 
 - name: "拷贝配置文件"
   ansible.builtin.template:

@@ -1,6 +1,6 @@
 # UTMs - Manager
 
-因开发与学习之需要，使用[UTM](https://getutm.app)搭建自己的Linux集群，并使用[Red Hat - Ansible](https://www.ansible.com/)管理。
+因开发与学习之需要，使用[UTM](https://getutm.app)搭建自己的Linux集群，并使用[RedHat - Ansible](https://www.ansible.com/)管理。
 
 ## 如何使用
 
@@ -41,7 +41,8 @@ OS:
 
 ## 操作系统
 
-* Linux: ubuntu-24.04.1-live-server-arm64
+* 主控机: MacOS (arm64)
+* 受控机: Ubuntu-24.04 LTS (arm64)
 
 ## 组件说明
 
