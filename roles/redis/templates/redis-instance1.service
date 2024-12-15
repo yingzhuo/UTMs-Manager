@@ -1,7 +1,7 @@
 [Unit]
 Description=Redis ({{ instance1.port }})
 Documentation=https://redis.io/docs/
-After=syslog.target
+After=syslog.target network.target
 
 [Service]
 Type=simple

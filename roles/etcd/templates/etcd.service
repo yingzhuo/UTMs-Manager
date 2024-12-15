@@ -1,7 +1,7 @@
 [Unit]
 Description=ETCD
 Documentation=https://etcd.io/docs/
-After=syslog.target
+After=syslog.target network.target
 
 [Service]
 Type=simple
