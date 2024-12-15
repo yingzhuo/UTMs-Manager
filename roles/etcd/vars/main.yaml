@@ -3,10 +3,7 @@ ip_2_machine_name_dict:
   "192.168.31.166": "machine-2"
   "192.168.31.167": "machine-3"
 
-ip_list: [
-  "192.168.31.165",
-  "192.168.31.166",
-  "192.168.31.167"
-]
-
 cluster_token: "fuck_redis"
+
+client_port: 2379
+peer_port: 2380
