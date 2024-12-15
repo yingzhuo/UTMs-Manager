@@ -1,5 +1,5 @@
 - name: "管理Redis多个节点"
-  hosts: redis
+  hosts: "{{ HOSTS | default('redis') }}"
   gather_facts: false
   roles:
     - role: redis

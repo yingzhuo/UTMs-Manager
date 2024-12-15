@@ -1,5 +1,5 @@
 - name: "管理Docker服务"
-  hosts: docker
+  hosts: "{{ HOSTS | default('docker') }}"
   gather_facts: false
   roles:
     - role: docker

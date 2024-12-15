@@ -10,12 +10,12 @@ Group=root
 
 ExecStart=/opt/etcd/etcd \
     --data-dir=/opt-data/etcd/ \
-    --name {{ ip_2_machine_name_dict[ansible_host] }} \
+    --name {{ machine_dict[ansible_host] }} \
 	--initial-advertise-peer-urls http://{{ ansible_host }}:{{ peer_port }} \
     --listen-peer-urls http://{{ ansible_host }}:{{ peer_port }} \
 	--advertise-client-urls http://{{ ansible_host }}:{{ client_port }} \
     --listen-client-urls http://{{ ansible_host }}:{{ client_port }} \
-	--initial-cluster {{ (ip_2_machine_name_dict | dict2items)[0]['value'] }}=http://{{ (ip_2_machine_name_dict | dict2items)[0]['key'] }}:{{ peer_port }},{{ (ip_2_machine_name_dict | dict2items)[1]['value'] }}=http://{{ (ip_2_machine_name_dict | dict2items)[1]['key'] }}:{{ peer_port }},{{ (ip_2_machine_name_dict | dict2items)[1]['value'] }}=http://{{ (ip_2_machine_name_dict | dict2items)[1]['key'] }}:{{ peer_port }} \
+	--initial-cluster {{ (machine_dict | dict2items)[0]['value'] }}=http://{{ (machine_dict | dict2items)[0]['key'] }}:{{ peer_port }},{{ (machine_dict | dict2items)[1]['value'] }}=http://{{ (machine_dict | dict2items)[1]['key'] }}:{{ peer_port }},{{ (machine_dict | dict2items)[1]['value'] }}=http://{{ (machine_dict | dict2items)[1]['key'] }}:{{ peer_port }} \
 	--initial-cluster-state new \
     --initial-cluster-token {{ cluster_token }}
 KillSignal=15

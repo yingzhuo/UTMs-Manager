@@ -1,5 +1,5 @@
 - name: "操作系统初始化"
-  hosts: all
+  hosts: "{{ HOSTS | default('all') }}"
   gather_facts: false
   roles:
     - role: ubuntu

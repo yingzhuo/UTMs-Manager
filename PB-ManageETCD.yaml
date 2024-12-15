@@ -1,5 +1,5 @@
 - name: "管理ETCD服务"
-  hosts: etcd
+  hosts: "{{ HOSTS | default('etcd')}}"
   gather_facts: false
   roles:
     - role: etcd

@@ -34,6 +34,10 @@
     group: yingzhuo
     mode: "u=rwx,g=rwx,o=rx"
 
+- name: "设置hostname"
+  ansible.builtin.hostname:
+    name: "{{ hostname_dict[ansible_host] }}"
+
 - name: "配置防火墙"
   community.general.ufw:
     state: disabled
