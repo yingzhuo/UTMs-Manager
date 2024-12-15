@@ -1,15 +1,16 @@
 usage:
 	@cat $(CURDIR)/usage.txt
 
-github:
+clean:
 	@find $(CURDIR) -name '.DS_Store' -delete
-	@echo -n "" > $(CURDIR)/PB-Test.yaml
+
+github: clean
 	@git add .
 	@git commit -m "$(shell /bin/date "+%F %T")"
 	@git push
 
 ping:
-	@ansible all -m ping -a "data=Hi"
+	@ansible all -m ping
 
 setup-mysql:
 	@ansible-playbook $(CURDIR)/PB-ManageMySQL.yaml --tags setup

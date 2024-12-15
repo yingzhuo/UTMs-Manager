@@ -1,6 +1,8 @@
 ===========================================================
 菜单:
     make usage            => 显示本菜单
+    make clean            => 清理本项目
+    make github           => 本项目所有内容提交到github.com
 
 杂项:
     make ping             => ping
