@@ -9,6 +9,21 @@
     - "重启Instance2服务"
   tags: setup
 
+- name: "确保安装目录和数据目录"
+  ansible.builtin.file:
+    name: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  loop:
+    - /opt/redis/bin/
+    - /opt/redis/etc/
+    - /opt-data/redis-6379/
+    - /opt-data/redis-6380/
+    - /opt-data/redis-redlock/
+  tags: setup
+
 - name: "拷贝公共配置文件"
   ansible.builtin.template:
     src: redis-included.conf

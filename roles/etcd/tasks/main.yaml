@@ -1,3 +1,15 @@
+- name: "确保安装目录和数据目录"
+  ansible.builtin.file:
+    name: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  loop:
+    - /opt/etcd/
+    - /opt-data/etcd/
+  tags: setup
+
 - name: "拷贝服务定义文件"
   ansible.builtin.template:
     src: etcd.service
