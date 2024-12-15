@@ -1,0 +1,5 @@
+- name: "管理XXL-job服务"
+  hosts: "{{ HOSTS | default('xxljob') }}"
+  gather_facts: false
+  roles:
+    - role: xxljob

@@ -66,11 +66,15 @@ stop-etcd:
 restart-etcd:
 	@ansible-playbook $(CURDIR)/PB-ManageETCD.yaml --tags restart
 
+setup-xxljob:
+	@ansible-playbook $(CURDIR)/PB-ManageXxlJob.yaml --tags setup
+
 .PHONY: usage github \
 	ping \
 	setup-mysql startup-mysql stop-mysql restart-mysql \
 	setup-redis startup-redis stop-redis restart-redis \
 	setup-docker startup-docker stop-docker restart-docker \
 	setup-etcd startup-etcd stop-etcd restart-etcd \
+	setup-xxljob \
 	setup-ssh \
 	setup-ubuntu

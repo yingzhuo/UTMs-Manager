@@ -1,0 +1,20 @@
+- name: "保证安装目录"
+  ansible.builtin.file:
+    name: /opt/xxl-job/
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  tags: setup
+
+- name: "拷贝服务定义文件"
+  ansible.builtin.template:
+    src: xxl-job.service
+    dest: /etc/systemd/system/xxl-job.service
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  tags: setup
+  notify:
+    - "重加载所有服务"
+    - "重启xxl-job服务"

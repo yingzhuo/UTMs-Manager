@@ -1,0 +1,10 @@
+db:
+  database_name: "xxl_job"
+  ip: "192.168.31.165"
+  port: "3306"
+  username: "xxl-job"
+  password: "xxl-job"
+
+server:
+  port: 7055
+  access_token: "hello-xxl-job"
