@@ -18,6 +18,7 @@
       - libncurses5-dev
       - libncursesw5-dev
       - sysstat
+      - build-essential
     state: present
 
 - name: "配置/tmp目录权限"

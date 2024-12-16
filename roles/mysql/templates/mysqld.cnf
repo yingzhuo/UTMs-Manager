@@ -12,9 +12,9 @@
 # -------
 user		                   = mysql
 port		                   = 3306
-pid-file	                   = /var/run/mysqld/mysqld.pid
+pid_file	                   = /var/run/mysqld/mysqld.pid
 socket	                       = /var/run/mysqld/mysqld.sock
-datadir	                       = /var/lib/mysql
+datadir	                       = /var/lib/mysql/
 
 # -------
 # 字符集
@@ -25,7 +25,7 @@ collation_server               = utf8mb4_0900_ai_ci
 # -------
 # 网络
 # -------
-bind-address		           = *
+bind_address		           = *
 
 # -------
 # 安全
@@ -61,11 +61,11 @@ skip_archive                   = ON
 # -------
 
 # BufferPoolSize总量小于1G时 InnoDB引擎只会分配一个实例
-innodb_buffer_pool_size       = 256M
-innodb_buffer_pool_instances  = 1
+innodb_buffer_pool_size        = 256M
+innodb_buffer_pool_instances   = 1
 
 # 自适应Hash索引对B+树查找优化
-innodb_adaptive_hash_index    = 1
+innodb_adaptive_hash_index     = 1
 
 # -------
 # SQL Mode
@@ -82,6 +82,25 @@ lower_case_table_names         = 0
 # bin-log
 # -------
 log_bin_trust_function_creators = 1
+
+# -------
+# 错误日志
+# -------
+log_error                       = /var/log/mysql/error.log
+
+# -------
+# 慢查询日志 (拉低性能，只有需要调优时打开)
+# -------
+slow_query_log		            = ON
+slow_query_log_file	            = /var/log/mysql/mysql-slow.log
+long_query_time                 = 2
+log_queries_not_using_indexes   = ON
+
+# -------
+# 一般日志 (严重拉低性能)
+# -------
+general_log                     = OFF
+general_log_file                = /var/log/mysql/query.log
 
 # ================================================================================================= 
 # 以下待整理
@@ -108,25 +127,6 @@ myisam-recover-options  = BACKUP
 
 # table_open_cache       = 4000
 
-#
-# * Logging and Replication
-#
-# Both location gets rotated by the cronjob.
-#
-# Log all queries
-# Be aware that this log type is a performance killer.
-# general_log_file        = /var/log/mysql/query.log
-# general_log             = 1
-#
-# Error log - should be very few entries.
-#
-log_error = /var/log/mysql/error.log
-#
-# Here you can see queries with especially long duration
-# slow_query_log		= 1
-# slow_query_log_file	= /var/log/mysql/mysql-slow.log
-# long_query_time = 2
-# log-queries-not-using-indexes
 #
 # The following can be used as easy to replay backup logs or for replication.
 # note: if you are setting up a replication slave, see README.Debian about
