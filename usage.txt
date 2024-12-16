@@ -1,43 +1,49 @@
 ===========================================================
 菜单:
-    make usage            => 显示本菜单
-    make clean            => 清理本项目
-    make github           => 本项目所有内容提交到github.com
+    make usage
+    make clean
+    make github
 
 杂项:
-    make ping             => ping
+    make ping
 
 Docker:
-    make startup-docker   => 启动Dockker服务
-    make stop-docker      => 关闭Docker服务
-    make setup-docker     => 配置Docker服务
-    make restart-docker   => 重启Docker服务
+    make startup-docker
+    make stop-docker
+    make setup-docker
+    make restart-docker
 
 MySQL:
-    make startup-mysql    => 开启MySQL服务
-    make stop-mysql       => 关闭MySQL服务
-    make setup-mysql      => 配置MySQL服务
-    make restart-mysql    => 重启MySQL服务
+    make startup-mysql
+    make stop-mysql
+    make setup-mysql
+    make restart-mysql
 
 Redis:
-    make startup-redis    => 开启Redis服务
-    make stop-redis       => 关闭Redis服务
-    make setup-redis      => 配置Reids服务
-    make restart-redis    => 重启Redis服务
+    make startup-redis
+    make stop-redis
+    make setup-redis
+    make restart-redis
 
 ETCD:
-    make startup-etcd     => 开启ETCD服务
-    make stop-etcd        => 关闭ETCD服务
-    make setup-etcd       => 配置ETCD服务
-    make restart-etcd     => 重启ETCD服务
+    make startup-etcd
+    make stop-etcd
+    make setup-etcd
+    make restart-etcd
 
 xxl-job:
-    make startup-xxljob   => 启动xxl-job服务
-    make stop-xxljob      => 停止xxl-job服务
-    make setup-xxljob     => 配置xxl-job服务
-    make restart-xxljob   => 重启xxl-job服务
+    make startup-xxljob
+    make stop-xxljob
+    make setup-xxljob
+    make restart-xxljob
+
+zookeeper:
+    make startup-zookeeper
+    make stop-zookeeper
+    make setup-zookeeper
+    make restart-zookeeper
 
 OS:
-    make setup-ssh        => 配置SSH服务
-    make setup-ubuntu     => 配置Ubuntu系统
+    make setup-ssh
+    make setup-ubuntu
 ===========================================================

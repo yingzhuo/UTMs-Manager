@@ -78,6 +78,18 @@ startup-xxljob:
 restart-xxljob:
 	@ansible-playbook $(CURDIR)/PB-ManageXxlJob.yaml --tags restart
 
+setup-zookeeper:
+	@ansible-playbook $(CURDIR)/PB-ManageZookeeper.yaml --tags setup
+
+stop-zookeeper:
+	@ansible-playbook $(CURDIR)/PB-ManageZookeeper.yaml --tags stop
+
+startup-zookeeper:
+	@ansible-playbook $(CURDIR)/PB-ManageZookeeper.yaml --tags startup
+
+restart-zookeeper:
+	@ansible-playbook $(CURDIR)/PB-ManageZookeeper.yaml --tags restart
+
 .PHONY: usage github \
 	ping \
 	setup-mysql startup-mysql stop-mysql restart-mysql \
@@ -85,5 +97,6 @@ restart-xxljob:
 	setup-docker startup-docker stop-docker restart-docker \
 	setup-etcd startup-etcd stop-etcd restart-etcd \
 	setup-xxljob startup-xxljob stop-xxljob restart-xxljob \
+	setup-zookeeper startup-zookeeper stop-zookeeper restart-zookeeper \
 	setup-ssh \
 	setup-ubuntu

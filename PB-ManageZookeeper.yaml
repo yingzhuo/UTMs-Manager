@@ -1,0 +1,5 @@
+- name: "管理Zookeeper"
+  hosts: "{{ HOSTS | default('zookeeper') }}"
+  gather_facts: false
+  roles:
+    - role: zookeeper

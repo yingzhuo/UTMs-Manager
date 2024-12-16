@@ -1,0 +1,73 @@
+- name: "保证安装目录"
+  ansible.builtin.file:
+    name: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  loop:
+    - "{{ install_dir }}"
+    - "{{ data_dir }}"
+    - "{{ log_dir }}"
+  tags: setup
+
+- name: "拷贝配置文件"
+  ansible.builtin.template:
+    src: zoo.cfg
+    dest: "{{ install_dir }}conf/zoo.cfg"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  tags: setup
+  notify:
+    - "重启zookeeper服务"
+
+- name: "设置ID文件"
+  ansible.builtin.copy:
+    dest: "{{ data_dir }}/myid"
+    content: "{{ id_dict[ansible_host] }}"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  tags: setup
+  notify:
+    - "重启zookeeper服务"
+
+- name: "拷贝服务定义文件"
+  ansible.builtin.template:
+    src: zookeeper.service
+    dest: /etc/systemd/system/zookeeper.service
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  tags: setup
+  notify:
+    - "重加载所有服务"
+    - "重启zookeeper服务"
+
+###############################################################################
+
+- name: "关闭zookeeper服务"
+  ansible.builtin.service:
+    name: zookeeper
+    state: stopped
+    enabled: false
+  tags: stop
+
+###############################################################################
+
+- name: "开启zookeeper服务"
+  ansible.builtin.service:
+    name: zookeeper
+    state: started
+    enabled: true
+  tags: startup
+
+###############################################################################
+
+- name: "重启zookeeper服务"
+  ansible.builtin.service:
+    name: zookeeper
+    state: restarted
+    enabled: true
+  tags: restart

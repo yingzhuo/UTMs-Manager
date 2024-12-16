@@ -1,0 +1,13 @@
+java_home: /opt/java-home
+
+install_dir: /opt/zookeeper/
+data_dir: /opt-data/zookeeper/
+log_dir: /var/log/zookeeper/
+
+net:
+  port: 2181
+
+id_dict:
+  "192.168.31.165": "1"
+  "192.168.31.166": "2"
+  "192.168.31.167": "3"
