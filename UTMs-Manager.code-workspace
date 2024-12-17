@@ -5,10 +5,10 @@
 		}
 	],
 	"settings": {
-		"ansible.python.interpreterPath": "/opt/homebrew/bin/python3",
-		"ansible.validation.enabled": false,
-		"ansible.validation.lint.enabled": false,
 		"makefile.configureOnOpen": true,
+		"ansible.python.interpreterPath": "/opt/homebrew/bin/python3",
+		"ansible.validation.enabled": true,
+		"ansible.validation.lint.enabled": false,
 		"material-icon-theme.activeIconPack": "angular_ngrx",
 		"material-icon-theme.hidesExplorerArrows": false
 	}
