@@ -1,0 +1,15 @@
+zookeeper:
+  cluster: 192.168.31.165:2181,192.168.31.166:2181,192.168.31.167:2181
+
+java_home: /opt/java-home/
+
+install_dir: /opt/kafka/
+data_dir: /opt-data/kafka/
+
+net:
+  port: 9092
+
+id_dict:
+  "192.168.31.165": "1"
+  "192.168.31.166": "2"
+  "192.168.31.167": "3"

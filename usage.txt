@@ -7,31 +7,31 @@
 杂项:
     make ping
 
-Docker:
+docker:
     make startup-docker
     make stop-docker
     make setup-docker
     make restart-docker
 
-MySQL:
+mysql:
     make startup-mysql
     make stop-mysql
     make setup-mysql
     make restart-mysql
 
-Redis:
+redis:
     make startup-redis
     make stop-redis
     make setup-redis
     make restart-redis
 
-ETCD:
+etcd:
     make startup-etcd
     make stop-etcd
     make setup-etcd
     make restart-etcd
 
-xxl-job:
+xxljob:
     make startup-xxljob
     make stop-xxljob
     make setup-xxljob
@@ -42,6 +42,12 @@ zookeeper:
     make stop-zookeeper
     make setup-zookeeper
     make restart-zookeeper
+
+kafka:
+    make startup-kafka
+    make stop-kafka
+    make setup-kafka
+    make restart-kafka
 
 OS:
     make setup-ssh

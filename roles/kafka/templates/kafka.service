@@ -1,0 +1,16 @@
+[Unit]
+Description=kafka
+Documentation=https://kafka.apache.org/documentation/
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+Environment="JAVA_HOME={{ java_home }}"
+ExecStart={{ install_dir }}/bin/kafka-server-start.sh {{ install_dir }}/config/server.properties
+ExecStop={{ install_dir }}/bin/zookeeper-server-stop.sh
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

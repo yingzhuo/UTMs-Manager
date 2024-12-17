@@ -1,0 +1,61 @@
+- name: "保证安装目录和数据目录"
+  ansible.builtin.file:
+    name: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  loop:
+    - "{{ install_dir }}"
+    - "{{ data_dir }}"
+  tags: setup
+
+- name: "拷贝配置文件"
+  ansible.builtin.template:
+    src: server.properties
+    dest: "{{ install_dir }}/config/server.properties"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  tags: setup
+  notify:
+    - "重启kafka服务"
+
+- name: "拷贝服务定义文件"
+  ansible.builtin.template:
+    src: kafka.service
+    dest: /etc/systemd/system/kafka.service
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  tags: setup
+  notify:
+    - "重加载所有服务"
+    - "重启kafka服务"
+
+###############################################################################
+
+- name: "关闭kafka服务"
+  ansible.builtin.service:
+    name: kafka
+    state: stopped
+    enabled: false
+  tags: stop
+
+###############################################################################
+
+- name: "开启kafka服务"
+  ansible.builtin.service:
+    name: kafka
+    state: started
+    enabled: true
+  tags: startup
+
+###############################################################################
+
+- name: "重启kafka服务"
+  ansible.builtin.service:
+    name: kafka
+    state: restarted
+    enabled: true
+  tags: restart

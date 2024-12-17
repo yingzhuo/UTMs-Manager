@@ -1,0 +1,5 @@
+- name: "管理Kafka"
+  hosts: "{{ HOSTS | default('kafka') }}"
+  gather_facts: false
+  roles:
+    - role: kafka
