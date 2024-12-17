@@ -19,6 +19,7 @@
       - libncursesw5-dev
       - sysstat
       - build-essential
+      - apt-transport-https
     state: present
 
 - name: "配置/tmp目录权限"
