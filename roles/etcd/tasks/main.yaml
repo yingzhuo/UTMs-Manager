@@ -22,6 +22,18 @@
     - "重启ETCD服务"
   tags: setup
 
+- name: "配置环境变量"
+  ansible.builtin.blockinfile:
+    name: /etc/zsh/zprofile
+    block: |
+      export ETCD_HOME=/opt/etcd
+      export PATH=$PATH:$ETCD_HOME
+      export ETCDCTL_API=3
+      alias etcdctl="etcdctl --endpoints=192.168.31.165:2379,192.168.31.166:2379,192.168.31.167:2379 --user root:root"
+    state: present
+    marker: "## {mark} add etcd block by ansible"
+  tags: setup
+
 ###############################################################################
 
 - name: "停止ETCD服务"

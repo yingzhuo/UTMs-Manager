@@ -105,6 +105,19 @@
     - "重启红锁服务"
   tags: setup
 
+- name: "配置环境变量"
+  ansible.builtin.blockinfile:
+    path: /etc/zsh/zprofile
+    block: |
+      # Redis
+      export REDIS_HOME=/opt/redis
+      export PATH=$PATH:$REDIS_HOME/bin
+      export REDISCLI_AUTH="redis"
+      alias redis-cli="redis-cli --raw --no-auth-warning"
+    marker: "## {mark} add redis block by ansible"
+    state: present
+  tags: setup
+
 ###############################################################################
 
 - name: "停止Redis所有节点"

@@ -44,6 +44,17 @@
   notify:
     - "重加载所有服务"
     - "重启zookeeper服务"
+  
+- name: "配置环境变量"
+  ansible.builtin.blockinfile:
+    name: /etc/zsh/zprofile
+    block: |
+      # zookeeper
+      export ZOOKEEPER_HOME={{ install_dir }}
+      export PATH=$PATH:$ZOOKEEPER_HOME/bin
+    state: present
+    marker: "## {mark} add zookeeper block by ansible"
+  tags: setup
 
 ###############################################################################
 
