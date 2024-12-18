@@ -28,14 +28,6 @@
     mode: "0777"
     state: directory
 
-- name: "配置vim (yingzhuo用户)"
-  ansible.builtin.unarchive:
-    src: vim.tar.gz
-    dest: /home/yingzhuo/
-    owner: yingzhuo
-    group: yingzhuo
-    mode: "u=rwx,g=rwx,o=rx"
-
 - name: "设置hostname"
   ansible.builtin.hostname:
     name: "{{ hostname_dict[ansible_host] }}"

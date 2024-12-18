@@ -102,6 +102,9 @@ startup-kafka: startup-zookeeper
 restart-kafka:
 	@ansible-playbook $(CURDIR)/PB-ManageKafka.yaml --tags restart
 
+cleanup-user-yingzhuo-home:
+	@ansible-playbook $(CURDIR)/PB-MangeUserYingZhuo.yaml --tags cleanup
+
 .PHONY: usage github \
 	ping \
 	setup-mysql startup-mysql stop-mysql restart-mysql \
@@ -112,4 +115,5 @@ restart-kafka:
 	setup-zookeeper startup-zookeeper stop-zookeeper restart-zookeeper \
 	setup-kafka startup-kafka stop-kafka restart-kafka \
 	setup-ssh \
-	setup-ubuntu
+	setup-ubuntu \
+	cleanup-user-yingzhuo-home
