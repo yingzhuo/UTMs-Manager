@@ -12,9 +12,12 @@
   ansible.builtin.file:
     path: "/home/yingzhuo/uploaded/"
     state: "{{ item }}"
+    owner: root
+    group: root
   loop:
     - absent
     - directory
+  changed_when: false
   tags: cleanup
 
 - name: "配置vim"
