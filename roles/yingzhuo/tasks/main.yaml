@@ -12,8 +12,8 @@
   ansible.builtin.file:
     path: "/home/yingzhuo/uploaded/"
     state: "{{ item }}"
-    owner: root
-    group: root
+    owner: yingzhuo
+    group: yingzhuo
   loop:
     - absent
     - directory
