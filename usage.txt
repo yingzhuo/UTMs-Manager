@@ -49,6 +49,12 @@ kafka:
     make setup-kafka
     make restart-kafka
 
+rocketmq:
+    make startup-rocketmq
+    make stop-rocketmq
+    make setup-rocketmq
+    make restart-rocketmq
+
 OS:
     make setup-ssh
     make setup-ubuntu

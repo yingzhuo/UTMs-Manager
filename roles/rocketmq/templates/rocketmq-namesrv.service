@@ -1,0 +1,18 @@
+[Unit]
+Description=rocketmq
+Documentation=https://rocketmq.apache.org/zh/docs/
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+Environment="JAVA_HOME={{ rocketmq_all.java_home }}"
+Environment="ROCKETMQ_HOME={{ rocketmq_all.rocketmq_home }}"
+ExecStart=/opt/rocketmq/bin/mqnamesrv
+ExecStop=/opt/bin/mqshutdown namesrv
+SuccessExitStatus=143
+WorkingDirectory=/opt/rocketmq
+
+[Install]
+WantedBy=multi-user.target

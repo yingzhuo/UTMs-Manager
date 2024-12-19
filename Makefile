@@ -105,6 +105,18 @@ restart-kafka:
 cleanup-user-yingzhuo-home:
 	@ansible-playbook $(CURDIR)/PB-MangeUserYingZhuo.yaml --tags cleanup
 
+setup-rocketmq:
+	@ansible-playbook ./PB-ManageRocketMQ.yaml --tags setup
+
+startup-rocketmq:
+	@ansible-playbook ./PB-ManageRocketMQ.yaml --tags startup
+
+stop-rocketmq:
+	@ansible-playbook ./PB-ManageRocketMQ.yaml --tags stop
+
+restart-rocketmq:
+	@ansible-playbook ./PB-ManageRocketMQ.yaml --tags restart
+
 .PHONY: usage github \
 	ping \
 	setup-mysql startup-mysql stop-mysql restart-mysql \
@@ -114,6 +126,7 @@ cleanup-user-yingzhuo-home:
 	setup-xxljob startup-xxljob stop-xxljob restart-xxljob \
 	setup-zookeeper startup-zookeeper stop-zookeeper restart-zookeeper \
 	setup-kafka startup-kafka stop-kafka restart-kafka \
+	setup-rocketmq startup-rocketmq stop-rocketmq restart-rocketmq \
 	setup-ssh \
 	setup-ubuntu \
 	cleanup-user-yingzhuo-home

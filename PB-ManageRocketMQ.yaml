@@ -1,0 +1,6 @@
+- name: "管理RocketMQ"
+  hosts: "{{ HOSTS | default('rocketmq') }}"
+  gather_facts: false
+  roles:
+    - role: rocketmq
+  
