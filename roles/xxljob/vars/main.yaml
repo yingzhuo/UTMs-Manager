@@ -1,13 +1,29 @@
+java_home: "/opt/java-home"
+
+app_name: "xxljob"
+app_home: "/opt/xxljob"
+app_config_dir: "/opt/xxljob/config"
+app_bin_dir: "/opt/xxljob/bin"
+app_lib_dir: "/opt/xxljob/libs"
+app_log_dir: "/var/log/xxljob"
+app_pid_dir: "/var/run"
+
+spring:
+  profiles: "default"
+
 db:
-  database_name: "xxl_job"
-  ip: "192.168.31.165"
+  host: "192.168.31.165"
   port: "3306"
   username: "xxl-job"
   password: "xxl-job"
 
-server:
-  port: 7055
-  servlet_context_path: "/admin"
-
-security:
+xxljob:
   access_token: "default_token"
+  port: "7055"
+
+vm:
+  thread_stack_mem: "512k"
+  heap_mem: "256m"
+  direct_mem: "256m"
+  meta_mem: "128m"
+  meta_max_mem: "320m"
