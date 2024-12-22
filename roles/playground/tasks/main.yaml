@@ -1,0 +1,66 @@
+- name: "确保目录"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+  loop:
+    - "{{ app_home }}"
+    - "{{ app_config_dir }}"
+    - "{{ app_bin_dir }}"
+    - "{{ app_lib_dir }}"
+  notify:
+    - "重启应用程序"
+  tags:
+    - setup
+
+- name: "拷贝JAR文件"
+  ansible.builtin.copy:
+    src: "{{ app_name }}.jar"
+    dest: "{{ app_home }}/{{ app_name }}.jar"
+    owner: root
+    group: root
+  notify:
+    - "重启应用程序"
+  tags:
+    - setup
+
+- name: "拷贝启动脚本"
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  loop:
+    - src: bin/init.sh.j2
+      dest: "{{ app_bin_dir }}/init.sh"
+    - src: bin/startup.sh.j2
+      dest: "{{ app_bin_dir }}/startup.sh"
+  notify:
+    - "重启应用程序"
+  tags:
+    - setup
+
+- name: "拷贝日志配置文件"
+  ansible.builtin.template:
+    src: config/logback.xml.j2
+    dest: "{{ app_config_dir }}/logback.xml"
+    owner: root
+    group: root
+  notify:
+    - "重启应用程序"
+  tags:
+    - setup
+
+- name: "拷贝服务定义文件"
+  ansible.builtin.template:
+    src: service/app.service.j2
+    dest: "/etc/systemd/system/{{ app_name }}.service"
+    owner: root
+    group: root
+  notify:
+    - "重加载所有服务"
+    - "重启应用程序"
+  tags:
+    - setup

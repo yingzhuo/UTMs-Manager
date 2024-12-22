@@ -1,0 +1,19 @@
+java_home: "/opt/java-home"
+
+app_name: "playground"
+app_home: "/opt/playground"
+app_config_dir: "/opt/playground/config"
+app_bin_dir: "/opt/playground/bin"
+app_lib_dir: "/opt/playground/libs"
+app_log_dir: "/var/log/playground"
+app_pid_dir: "/var/run"
+
+spring:
+  profiles: "prod"
+
+vm:
+  thread_stack_mem: "512k"
+  heap_mem: "256m"
+  direct_mem: "256m"
+  meta_mem: "128m"
+  meta_max_mem: "320m"
