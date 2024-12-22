@@ -1,3 +1,9 @@
+- name: "检查tag"
+  ansible.builtin.debug:
+    msg: "[错误]没有指定tag 选项如下"
+  when: "ansible_run_tags == ['all']"
+  failed_when: true
+
 - name: "确保目录"
   ansible.builtin.file:
     path: "{{ item }}"
@@ -20,34 +26,40 @@
     dest: "{{ app_home }}/{{ app_name }}.jar"
     owner: root
     group: root
+    backup: true
   notify:
     - "重启应用程序"
+  failed_when: false
   tags:
     - setup
 
-- name: "拷贝启动脚本"
+- name: "拷贝启动脚本和初始化脚本"
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root
     group: root
-    mode: "u=rwx,g=rx,o=rx"
+    mode: "{{ item.mode }}"
+    backup: false
   loop:
     - src: bin/init.sh.j2
       dest: "{{ app_bin_dir }}/init.sh"
+      mode: "0755"
     - src: bin/startup.sh.j2
       dest: "{{ app_bin_dir }}/startup.sh"
+      mode: "0755"
   notify:
     - "重启应用程序"
   tags:
     - setup
 
-- name: "拷贝日志配置文件"
+- name: "拷贝日志配置文件 (logback)"
   ansible.builtin.template:
     src: config/logback.xml.j2
     dest: "{{ app_config_dir }}/logback.xml"
     owner: root
     group: root
+    backup: false
   notify:
     - "重启应用程序"
   tags:
@@ -59,8 +71,56 @@
     dest: "/etc/systemd/system/{{ app_name }}.service"
     owner: root
     group: root
+    backup: false
   notify:
     - "重加载所有服务"
     - "重启应用程序"
   tags:
     - setup
+
+##############################################################################
+
+- name: "关闭应用程序"
+  ansible.builtin.service:
+    name: "{{ app_name }}"
+    state: stopped
+    enabled: false
+  tags:
+    - stop
+    - uninstall
+
+##############################################################################
+
+- name: "启动应用程序"
+  ansible.builtin.service:
+    name: "{{ app_name }}"
+    state: started
+    enabled: true
+  tags:
+    - startup
+
+##############################################################################
+
+- name: "重启应用程序"
+  ansible.builtin.service:
+    name: "{{ app_name }}"
+    state: restarted
+    enabled: true
+  tags:
+    - restart
+
+##############################################################################
+
+- name: "移除所有文件"
+  ansible.builtin.file:
+    name: "{{ item }}"
+    state: absent
+  loop:
+    - "/etc/systemd/system/{{ app_name }}.service"
+    - "{{ app_home }}"
+    - "{{ app_log_dir }}"
+    - "{{ app_pid_dir }}/{{ app_name }}.pid"
+  notify:
+    - "重加载所有服务"
+  tags:
+    - uninstall
