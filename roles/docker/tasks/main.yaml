@@ -1,3 +1,11 @@
+- name: "检查tag"
+  ansible.builtin.debug:
+    msg: "[错误]没有指定tags"
+  when: "ansible_run_tags == ['all']"
+  failed_when: true
+
+###############################################################################
+
 - name: "拷贝配置文件"
   ansible.builtin.template:
     src: daemon.json

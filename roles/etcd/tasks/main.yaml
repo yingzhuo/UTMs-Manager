@@ -1,3 +1,11 @@
+- name: "检查tag"
+  ansible.builtin.debug:
+    msg: "[错误]没有指定tags"
+  when: "ansible_run_tags == ['all']"
+  failed_when: true
+
+###############################################################################
+
 - name: "确保安装目录和数据目录"
   ansible.builtin.file:
     name: "{{ item }}"
