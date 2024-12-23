@@ -1,27 +1,25 @@
 #!/bin/sh
 
-# -----------------------------------------------
+# ----------------------------------------------------------------------------------------------
 # VM参数
-# -----------------------------------------------
+# ----------------------------------------------------------------------------------------------
 {% for item in java_opts %}
 JAVA_OPT="${JAVA_OPT} {{ item }}"
 {% else %}
 JAVA_OPT=""
-{% endfor%}
-
+{% endfor %}
 {% if app_heapdump_dir != '' %}
-# 堆dump
+# HeapDump
 JAVA_OPT="${JAVA_OPT} -XX:+HeapDumpOnOutOfMemoryError -XX:+HeapDumpBeforeFullGC -XX:HeapDumpPath={{ app_heapdump_dir }}/{{ app_name }}_heapdump.hprof"
-{% endif%}
-
+{% endif %}
 {% if app_gclog_dir != '' %}
-# gc日志
+# GC-LOG
 JAVA_OPT="${JAVA_OPT} -verbose:gc -Xlog:gc*:file={{ app_gclog_dir }}/{{ app_name }}_gc_%p_%t.log:time,tags:filecount=5,filesize=32M"
 {% endif %}
 
-# -----------------------------------------------
+# ----------------------------------------------------------------------------------------------
 # System Properties
-# -----------------------------------------------
+# ----------------------------------------------------------------------------------------------
 JAVA_OPT_EXT="${JAVA_OPT_EXT} -Djava.security.egd=file:/dev/./urandom"
 JAVA_OPT_EXT="${JAVA_OPT_EXT} -Dloader.system=false"
 JAVA_OPT_EXT="${JAVA_OPT_EXT} -Dloader.path={{ app_lib_dir }},{{ app_config_dir }}"
@@ -34,16 +32,16 @@ if [ -e "{{ app_home }}/config/logback-spring.xml" ]; then
   JAVA_OPT_EXT="${JAVA_OPT_EXT} -Dlogging.config={{ app_home }}/config/logback-spring.xml"
 fi
 
-# -----------------------------------------------
-# 执行初始化脚本
-# -----------------------------------------------
+# ----------------------------------------------------------------------------------------------
+# 初始化有可执行权限时 执行之
+# ----------------------------------------------------------------------------------------------
 if [ -x "{{ app_home }}/bin/init.sh" ]; then
     {{ app_home }}/bin/init.sh
 fi
 
-# -----------------------------------------------
+# ----------------------------------------------------------------------------------------------
 # 启动程序
-# -----------------------------------------------
+# ----------------------------------------------------------------------------------------------
 {{ java_home }}/bin/java \
   ${JAVA_OPT} \
   ${JAVA_OPT_EXT} \

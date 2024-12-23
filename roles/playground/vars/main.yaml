@@ -1,6 +1,8 @@
 java_home: "/opt/java-home"
 
 app_name: "playground"
+app_doc_url: ""
+
 app_home: "/opt/playground"
 app_config_dir: "/opt/playground/config"
 app_bin_dir: "/opt/playground/bin"
@@ -10,6 +12,10 @@ app_pid_dir: "/var/run"
 
 app_heapdump_dir: ""
 app_gclog_dir: ""
+
+envs: 
+  "FOO": "foo"
+  "BAR": "bar"
 
 java_opts:
   - "-server -Xmixed"
