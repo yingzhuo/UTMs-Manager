@@ -4,16 +4,22 @@ app_name: "playground"
 app_home: "/opt/playground"
 app_config_dir: "/opt/playground/config"
 app_bin_dir: "/opt/playground/bin"
-app_lib_dir: "/opt/playground/libs"
+app_lib_dir: "/opt/playground/lib"
 app_log_dir: "/var/log/playground"
 app_pid_dir: "/var/run"
 
-spring:
-  profiles: "prod"
+app_heapdump_dir: ""
+app_gclog_dir: ""
 
-vm:
-  thread_stack_mem: "512k"
-  heap_mem: "256m"
-  direct_mem: "256m"
-  meta_mem: "128m"
-  meta_max_mem: "320m"
+java_opts:
+  - "-server -Xmixed"
+  - "-XX:-PrintCommandLineFlags -XX:-PrintFlagsInitial -XX:-PrintFlagsFinal"
+  - "-XX:ThreadStackSize=512k"
+  - "-XX:InitialHeapSize=256m -XX:MinHeapSize=256m -XX:NewRatio=2 -XX:SurvivorRatio=8 -XX:+UseTLAB"
+  - "-XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=320m -XX:+UseCompressedOops"
+  - "-XX:MaxDirectMemorySize=256m"
+  - "-XX:+UseG1GC -XX:MaxGCPauseMillis=300"
+  - "-XX:+UsePerfData"
+
+spring_args:
+  - "--spring.profiles.active=prod"
