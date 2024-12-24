@@ -10,11 +10,6 @@ Type=simple
 User=root
 Group=root
 Environment="JAVA_HOME={{ java_home }}"
-{% if envs is defined %}
-{% for k, v in envs.items() %}
-Environment="{{ k }}={{ v }}"
-{% endfor %}
-{% endif %}
 WorkingDirectory={{ app_home }}
 ExecStart={{ app_bin_dir }}/startup.sh
 KillSignal=15

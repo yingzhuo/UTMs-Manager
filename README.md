@@ -27,4 +27,4 @@ make usage
 
 ## 许可证
 
-* [Apache-2.0](./LICENSE.txt)
+* [Apache-2.0](./.github/LICENSE.txt)
