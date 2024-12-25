@@ -24,8 +24,8 @@
 
 - name: "拷贝JAR文件"
   ansible.builtin.copy:
-    src: "{{ app_name }}.jar"
-    dest: "{{ app_home }}/{{ app_name }}.jar"
+    src: "{{ app_name }}-{{ app_version }}.jar"
+    dest: "{{ app_home }}/{{ app_name }}-{{ app_version }}.jar"
     owner: root
     group: root
     backup: true

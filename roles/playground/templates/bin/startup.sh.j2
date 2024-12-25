@@ -32,7 +32,7 @@ JAVA_OPT="${JAVA_OPT} -verbose:gc -Xlog:gc*:file={{ app_gclog_dir }}/{{ app_name
 # System Properties
 # ----------------------------------------------------------------------------------------------
 JAVA_OPT_EXT="${JAVA_OPT_EXT} -Djava.security.egd=file:/dev/./urandom"
-JAVA_OPT_EXT="${JAVA_OPT_EXT} -Dloader.system=false"
+JAVA_OPT_EXT="${JAVA_OPT_EXT} -Dloader.system=true"
 JAVA_OPT_EXT="${JAVA_OPT_EXT} -Dloader.home={{ app_home }}"
 JAVA_OPT_EXT="${JAVA_OPT_EXT} -Dloader.path={{ app_lib_dir }},{{ app_config_dir }}"
 JAVA_OPT_EXT="${JAVA_OPT_EXT} -Dspring.pid.file={{ app_pid_dir }}/{{ app_name }}.pid"
@@ -53,10 +53,12 @@ if [ -x {{ app_home }}/bin/init.sh ]; then
     {{ app_home }}/bin/init.sh
 fi
 
+JAR="{{ app_home }}/{{ app_name }}-{{ app_version }}.jar"
+
 ${JAVA} \
   ${JAVA_OPT} \
   ${JAVA_OPT_EXT} \
-  -cp {{ app_home }}/{{ app_name }}.jar \
+  -cp ${JAR} \
   org.springframework.boot.loader.launch.PropertiesLauncher \
   {% for item in spring_args %}{{ item }} \{% endfor %} 
   "$@"

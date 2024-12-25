@@ -25,6 +25,7 @@
     group: root
     mode: "u=rwx,g=rx,o=rx"
   loop:
+    - /opt/redis/
     - /opt/redis/bin/
     - /opt/redis/etc/
     - /opt-data/redis-6379/

@@ -1,6 +1,7 @@
 java_home: "/opt/java-home"
 
 app_name: "playground"
+app_version: "0.3.1"
 app_doc_url: "https://github.com/yingzhuo/spring-boot-playground"
 
 app_home: "/opt/playground"
