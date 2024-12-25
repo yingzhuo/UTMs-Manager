@@ -1,5 +1,8 @@
 [Unit]
 Description={{ app_name }}
+{% if app_doc_url | default('') %}
+Documentation={{ app_doc_url }}
+{% endif %}
 After=syslog.target network.target
 
 [Service]
@@ -8,9 +11,7 @@ User=root
 Group=root
 Environment="JAVA_HOME={{ java_home }}"
 WorkingDirectory={{ app_home }}
-ExecStart={{ app_bin_dir }}/startup.sh \
-    --spring.profiles.active={{ spring.profiles }} \
-    --spring.pid.file={{ app_pid_dir }}/{{ app_name }}.pid
+ExecStart={{ app_bin_dir }}/startup.sh
 KillSignal=15
 SuccessExitStatus=143
 

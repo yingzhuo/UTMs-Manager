@@ -55,13 +55,24 @@
   tags:
     - setup
 
-- name: "拷贝日志配置文件 (logback)"
+- name: "拷贝日志配置文件 (logback-spring.xml)"
   ansible.builtin.template:
     src: config/logback.xml.j2
     dest: "{{ app_config_dir }}/logback-spring.xml"
     owner: root
     group: root
     backup: false
+  notify:
+    - "重启应用程序"
+  tags:
+    - setup
+  
+- name: "拷贝lastappend情景配置文件"
+  ansible.builtin.template:
+    src: config/application-last_override.yaml
+    dest: "{{ app_config_dir }}/application-last_override.yaml"
+    owner: root
+    group: root
   notify:
     - "重启应用程序"
   tags:
