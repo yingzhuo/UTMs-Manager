@@ -14,16 +14,20 @@ export {{ k }}="{{ v }}"
 # ----------------------------------------------------------------------------------------------
 # VM
 # ----------------------------------------------------------------------------------------------
+{% if java_opts is defined %}
 {% for item in java_opts %}
 JAVA_OPT="${JAVA_OPT} {{ item }}"
 {% else %}
 JAVA_OPT=""
 {% endfor %}
-{% if app_heapdump_dir != '' %}
+{% endif %}
+
+{% if app_heapdump_dir is defined and app_heapdump_dir != '' %}
 # HeapDump
 JAVA_OPT="${JAVA_OPT} -XX:+HeapDumpOnOutOfMemoryError -XX:+HeapDumpBeforeFullGC -XX:HeapDumpPath={{ app_heapdump_dir }}/{{ app_name }}_heapdump.hprof"
 {% endif %}
-{% if app_gclog_dir != '' %}
+
+{% if app_gclog_dir is defined and app_gclog_dir != '' %}
 # GC-LOG
 JAVA_OPT="${JAVA_OPT} -verbose:gc -Xlog:gc*:file={{ app_gclog_dir }}/{{ app_name }}_gc_%p_%t.log:time,tags:filecount=5,filesize=32M"
 {% endif %}
@@ -55,10 +59,12 @@ fi
 
 JAR="{{ app_home }}/{{ app_name }}-{{ app_version }}.jar"
 
+SPRING_BOOT_LAUNCHER="{{ spring_boot_launcher | default('org.springframework.boot.loader.launch.PropertiesLauncher') }}"
+
 ${JAVA} \
   ${JAVA_OPT} \
   ${JAVA_OPT_EXT} \
   -cp ${JAR} \
-  org.springframework.boot.loader.launch.PropertiesLauncher \
+  ${SPRING_BOOT_LAUNCHER} \
   {% for item in spring_args %}{{ item }} \{% endfor %} 
   "$@"
