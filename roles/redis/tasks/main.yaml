@@ -25,92 +25,73 @@
     group: root
     mode: "u=rwx,g=rx,o=rx"
   loop:
-    - /opt/redis/
-    - /opt/redis/bin/
-    - /opt/redis/etc/
-    - /opt-data/redis-6379/
-    - /opt-data/redis-6380/
-    - /opt-data/redis-redlock/
+    - "{{ common.install_dir }}"
+    - "{{ common.bin_dir }}"
+    - "{{ common.config_dir }}"
+    - "{{ instance1.data_dir }}"
+    - "{{ instance2.data_dir }}"
+    - "{{ redlock.data_dir }}"
   tags: setup
 
-- name: "拷贝公共配置文件"
+# - name: "拷贝二进制文件"
+#   ansible.builtin.unarchive:
+#     src: redis-bin-7.4.1.tgz
+#     dest: "{{ common.bin_dir }}"
+#     extra_opts:
+#       - "--strip-components=1"
+#       - "--show-stored-names"
+#   tags: setup
+
+# - name: "赋予二进制文件可执行权限"
+#   ansible.builtin.file:
+#     path: "{{ item }}"
+#     state: file
+#     mode: "0755"
+#   loop:
+#     - "{{ common.bin_dir }}/redis-cli"
+#     - "{{ common.bin_dir }}/redis-server"
+#   tags: setup
+
+- name: "拷贝配置文件"
   ansible.builtin.template:
-    src: redis-included.conf
-    dest: /opt/redis/etc/redis-included.conf
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
+  loop:
+    - src: redis-included.conf
+      dest: "{{ common.config_dir }}/redis-included.conf"
+    - src: redis-instance1.conf
+      dest: "{{ common.config_dir }}/redis-{{ instance1.port }}.conf"
+    - src: redis-instance2.conf
+      dest: "{{ common.config_dir }}/redis-{{ instance2.port }}.conf"
+    - src: redis-redlock.conf
+      dest: "{{ common.config_dir }}/redis-redlock.conf"
   notify:
     - "重启Instance1服务"
     - "重启Instance2服务"
-  tags: setup
-
-- name: "拷贝Instance1配置文件"
-  ansible.builtin.template:
-    src: redis-instance1.conf
-    dest: /opt/redis/etc/redis-{{ instance1.port }}.conf
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-  notify:
-    - "重启Instance1服务"
-  tags: setup
-
-- name: "拷贝Instance1服务定义文件"
-  ansible.builtin.template:
-    src: redis-instance1.service
-    dest: /etc/systemd/system/{{ instance1.service }}.service
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-  notify:
-    - "重加载所有服务"
-    - "重启Instance1服务"
-  tags: setup
-
-- name: "拷贝Instance2配置文件"
-  ansible.builtin.template:
-    src: redis-instance2.conf
-    dest: /opt/redis/etc/redis-{{ instance2.port }}.conf
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-  notify:
-    - "重启Instance2服务"
-  tags: setup
-
-- name: "拷贝Instance2服务定义文件"
-  ansible.builtin.template:
-    src: redis-instance2.service
-    dest: /etc/systemd/system/{{ instance2.service }}.service
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-  notify:
-    - "重加载所有服务"
-    - "重启Instance2服务"
-  tags: setup
-
-- name: "拷贝红锁服务配置文件"
-  ansible.builtin.template:
-    src: redis-redlock.conf
-    dest: /opt/redis/etc/redis-redlock.conf
-    owner: root
-    group: root
-    mode: "u=rw,g=r,o=r"
-  notify:
     - "重启红锁服务"
   tags: setup
 
-- name: "拷贝红锁服务定义文件"
+- name: "拷贝服务定义文件"
   ansible.builtin.template:
-    src: redis-redlock.service
-    dest: /etc/systemd/system/{{ redlock.service }}.service
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
+  loop:
+    - src: redis-instance1.service
+      dest: "/etc/systemd/system/{{ instance1.service }}.service"
+    - src: redis-instance2.service
+      dest: "/etc/systemd/system/{{ instance2.service }}.service"
+    - src: redis-redlock.service
+      dest: "/etc/systemd/system/{{ redlock.service }}.service"     
   notify:
     - "重加载所有服务"
+    - "重启Instance1服务"
+    - "重启Instance2服务"
     - "重启红锁服务"
   tags: setup
 
@@ -138,7 +119,10 @@
     - "{{ instance1.service }}"
     - "{{ instance2.service }}"
     - "{{ redlock.service }}"
-  tags: stop
+  failed_when: false
+  tags: 
+    - stop
+    - uninstall
 
 ###############################################################################
 
@@ -165,3 +149,50 @@
     - "{{ instance2.service }}"
     - "{{ redlock.service }}"
   tags: restart
+
+###############################################################################
+
+- name: "删除服务定义文件"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "/etc/systemd/system/{{ instance1.service }}.service"
+    - "/etc/systemd/system/{{ instance2.service }}.service"
+    - "/etc/systemd/system/{{ redlock.service }}.service"
+  notify:
+    - "重加载所有服务"
+  tags:
+    - uninstall
+
+- name: "删除安装目录"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "/opt-data/redis-6379"
+    - "/opt-data/redis-6380"
+    - "/opt-data/redis-redlock"
+  tags:
+    - uninstall
+
+- name: "删除数据目录"
+  ansible.builtin.file:
+    path: /opt-data/redis
+    state: absent
+  tags:
+    - uninstall
+
+- name: "配置环境变量"
+  ansible.builtin.blockinfile:
+    path: /etc/zsh/zprofile
+    block: |
+      # Redis
+      export REDIS_HOME=/opt/redis
+      export PATH=$PATH:$REDIS_HOME/bin
+      export REDISCLI_AUTH="redis"
+      alias redis-cli="redis-cli --raw --no-auth-warning"
+    marker: "## {mark} add redis block by ansible"
+    state: absent
+  tags: 
+    - uninstall

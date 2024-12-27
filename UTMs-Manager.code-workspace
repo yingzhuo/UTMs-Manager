@@ -3,6 +3,10 @@
 		{
 			"name": "ansible",
 			"path": "."
+		},
+		{
+			"name": "storge",
+			"path": "../UTMs-Manager-Storge"
 		}
 	],
 	"settings": {
