@@ -74,6 +74,11 @@ innodb_adaptive_hash_index     = 1
 sql_mode = ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
 
 # -------
+# 事务
+# -------
+transaction_isolation          = REPEATABLE-READ
+
+# -------
 # 杂项
 # -------
 lower_case_table_names         = 0
@@ -99,7 +104,7 @@ log_queries_not_using_indexes   = ON
 # -------
 # 一般日志 (严重拉低性能)
 # -------
-general_log                     = OFF
+general_log                     = ON
 general_log_file                = /var/log/mysql/query.log
 
 # ================================================================================================= 
