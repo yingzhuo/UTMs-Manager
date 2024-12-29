@@ -10,51 +10,46 @@
 # -------------------------------------------------------------------------------------------------
 # 基础
 # -------------------------------------------------------------------------------------------------
-user		                   = mysql
-port		                   = 3306
-pid_file	                   = /var/run/mysqld/mysqld.pid
-socket	                       = /var/run/mysqld/mysqld.sock
-datadir	                       = /var/lib/mysql/
+user		                                               = mysql
+port		                                               = 3306
+pid_file	                                               = /var/run/mysqld/mysqld.pid
+socket	                                                   = /var/run/mysqld/mysqld.sock
+datadir	                                                   = /var/lib/mysql
+tmpdir		                                               = /tmp
 
 # -------------------------------------------------------------------------------------------------
 # 字符集
 # -------------------------------------------------------------------------------------------------
-character_set_server           = utf8mb4
-collation_server               = utf8mb4_0900_ai_ci
+character_set_server                                       = utf8mb4
+collation_server                                           = utf8mb4_0900_ai_ci
 
 # -------------------------------------------------------------------------------------------------
 # 网络
 # -------------------------------------------------------------------------------------------------
-bind_address		           = *
+bind_address		                                       = *
 
 # -------------------------------------------------------------------------------------------------
 # 安全
 # -------------------------------------------------------------------------------------------------
-require_secure_transport       = OFF
-default_authentication_plugin  = caching_sha2_password
-
-# -------------------------------------------------------------------------------------------------
-# "mysqlx"插件
-# -------------------------------------------------------------------------------------------------
-skip_mysqlx                    = ON
-skip_mysqlx_cache_cleaner      = ON
+require_secure_transport                                   = OFF
+default_authentication_plugin                              = caching_sha2_password
 
 # -------------------------------------------------------------------------------------------------
 # "validate_password"插件 密码强度设置 
 # -------------------------------------------------------------------------------------------------
-plugin_load_add                   = validate_password.so
-validate_password_check_user_name = OFF
-validate_password_length          = 4
-validate_password_policy          = LOW
+plugin_load_add                                            = validate_password.so
+validate_password_check_user_name                          = OFF
+validate_password_length                                   = 4
+validate_password_policy                                   = LOW
 
 # -------------------------------------------------------------------------------------------------
 # 存储引擎选项
 # -------------------------------------------------------------------------------------------------
-default_storage_engine         = InnoDB
-default_tmp_storage_engine     = InnoDB
-skip_federated                 = ON
-skip_blackhole                 = ON
-skip_archive                   = ON
+default_storage_engine                                     = InnoDB
+default_tmp_storage_engine                                 = InnoDB
+skip_federated                                             = ON
+skip_blackhole                                             = ON
+skip_archive                                               = ON
 
 # -------------------------------------------------------------------------------------------------
 # SQL Mode
@@ -67,62 +62,59 @@ sql_mode = ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,E
 # -------------------------------------------------------------------------------------------------
 
 # BufferPoolSize总量小于1G时 InnoDB引擎只会分配一个实例
-innodb_buffer_pool_size        = 256M
-innodb_buffer_pool_instances   = 1
+innodb_buffer_pool_size                                    = 256M
+innodb_buffer_pool_instances                               = 1
 
 # 自适应Hash索引对B+树查找优化
-innodb_adaptive_hash_index     = ON
+innodb_adaptive_hash_index                                 = ON
 
-# redo日志刷盘策略
-innodb_flush_log_at_trx_commit = 1
-innodb_log_file_size           = 48M
-innodb_log_files_in_group      = 2
-innodb_log_group_home_dir      = ./
-
-innodb_undo_directory          = ./
-innodb_undo_tablespaces        = 2
+innodb_flush_log_at_trx_commit                             = 1
+innodb_log_file_size                                       = 48M
+innodb_log_files_in_group                                  = 2
+innodb_log_group_home_dir                                  = ./
+innodb_undo_directory                                      = ./
+innodb_undo_tablespaces                                    = 2
 
 # -------------------------------------------------------------------------------------------------
 # 事务
 # -------------------------------------------------------------------------------------------------
-transaction_isolation          = REPEATABLE-READ
+transaction_isolation                                      = REPEATABLE-READ
 
 # -------------------------------------------------------------------------------------------------
 # 杂项
 # -------------------------------------------------------------------------------------------------
-lower_case_table_names         = 0
+lower_case_table_names                                     = 0
+skip_mysqlx                                                = ON
+skip_mysqlx_cache_cleaner                                  = ON
 
 # -------------------------------------------------------------------------------------------------
 # bin-log
 # -------------------------------------------------------------------------------------------------
-log_bin_trust_function_creators = 1
-
-# -------------------------------------------------------------------------------------------------
-# 错误日志
-# -------------------------------------------------------------------------------------------------
-log_error                       = /var/log/mysql/error.log
-
-# -------------------------------------------------------------------------------------------------
-# 慢查询日志 (拉低性能，只有需要调优时打开)
-# -------------------------------------------------------------------------------------------------
-slow_query_log		            = ON
-slow_query_log_file	            = /var/log/mysql/mysql-slow.log
-long_query_time                 = 2
-log_queries_not_using_indexes   = ON
+log_bin_trust_function_creators                            = 1
+max_binlog_size                                            = 100M
 
 # -------------------------------------------------------------------------------------------------
 # 一般日志 (严重拉低性能)
 # -------------------------------------------------------------------------------------------------
-general_log                     = ON
-general_log_file                = /var/log/mysql/query.log
+general_log                                                = OFF
+general_log_file                                           = /var/log/mysql/query.log
+
+# -------------------------------------------------------------------------------------------------
+# 错误日志
+# -------------------------------------------------------------------------------------------------
+log_error                                                  = /var/log/mysql/error.log
+
+# -------------------------------------------------------------------------------------------------
+# 慢查询日志 (拉低性能 建议需要调优时打开)
+# -------------------------------------------------------------------------------------------------
+slow_query_log		                                       = ON
+slow_query_log_file	                                       = /var/log/mysql/mysql-slow.log
+long_query_time                                            = 2
+log_queries_not_using_indexes                              = ON
 
 # ================================================================================================= 
 # 以下待整理
 # =================================================================================================
-
-# If MySQL is running as a replication slave, this should be
-# changed. Ref https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_tmpdir
-# tmpdir		= /tmp
 
 #
 # * Fine Tuning
@@ -148,6 +140,6 @@ myisam-recover-options  = BACKUP
 # server-id		= 1
 # log_bin			= /var/log/mysql/mysql-bin.log
 # binlog_expire_logs_seconds	= 2592000
-max_binlog_size   = 100M
+
 # binlog_do_db		= include_database_name
 # binlog_ignore_db	= include_database_name
