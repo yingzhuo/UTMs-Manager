@@ -36,7 +36,7 @@
   community.general.ufw:
     state: disabled
 
-- name: "配置环境变量"
+- name: "配置HOSTS"
   ansible.builtin.blockinfile:
     path: /etc/hosts
     block: |

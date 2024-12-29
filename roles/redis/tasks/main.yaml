@@ -60,13 +60,13 @@
     group: root
     mode: "u=rw,g=r,o=r"
   loop:
-    - src: redis-included.conf
+    - src: redis-included.conf.j2
       dest: "{{ common.config_dir }}/redis-included.conf"
-    - src: redis-instance1.conf
+    - src: redis-instance1.conf.j2
       dest: "{{ common.config_dir }}/redis-{{ instance1.port }}.conf"
-    - src: redis-instance2.conf
+    - src: redis-instance2.conf.j2
       dest: "{{ common.config_dir }}/redis-{{ instance2.port }}.conf"
-    - src: redis-redlock.conf
+    - src: redis-redlock.conf.j2
       dest: "{{ common.config_dir }}/redis-redlock.conf"
   notify:
     - "重启Instance1服务"
@@ -82,12 +82,12 @@
     group: root
     mode: "u=rw,g=r,o=r"
   loop:
-    - src: redis-instance1.service
+    - src: redis-instance1.service.j2
       dest: "/etc/systemd/system/{{ instance1.service }}.service"
-    - src: redis-instance2.service
+    - src: redis-instance2.service.j2
       dest: "/etc/systemd/system/{{ instance2.service }}.service"
-    - src: redis-redlock.service
-      dest: "/etc/systemd/system/{{ redlock.service }}.service"     
+    - src: redis-redlock.service.j2
+      dest: "/etc/systemd/system/{{ redlock.service }}.service.j2"
   notify:
     - "重加载所有服务"
     - "重启Instance1服务"

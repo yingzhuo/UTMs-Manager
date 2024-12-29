@@ -14,11 +14,20 @@
     group: root
     mode: "u=rw,g=r,o=r"
   loop:
-    - mysqld.cnf
-    - mysql.cnf
+    - mysqld.cnf.j2
+    - mysql.cnf.j2
   notify:
     - "重启MySQL服务"
-  tags: setup
+  tags:
+    - setup
+
+- name: "为数据目录创建软连接"
+  ansible.builtin.file:
+    src: /var/lib/mysql
+    dest: /opt-data/mysql
+    state: link
+  tags:
+    - setup
 
 - name: "更新管理账户属组"
   ansible.builtin.user:
@@ -26,7 +35,8 @@
     groups:
       - mysql
     append: true
-  tags: setup
+  tags:
+    - setup
 
 ###############################################################################
 
@@ -35,7 +45,8 @@
     name: mysql
     state: stopped
     enabled: false
-  tags: stop
+  tags:
+    - stop
 
 ###############################################################################
 
@@ -44,7 +55,8 @@
     name: mysql
     state: started
     enabled: true
-  tags: startup
+  tags:
+    - startup
 
 ###############################################################################
 
@@ -53,4 +65,5 @@
     name: mysql
     state: restarted
     enabled: true
-  tags: restart
+  tags:
+    - restart
