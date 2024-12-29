@@ -4,19 +4,37 @@
   when: "ansible_run_tags == ['all']"
   failed_when: true
 
-###############################################################################
+##############################################################################
 
-- name: "确保安装目录和数据目录"
+- name: "确保安装目录"
   ansible.builtin.file:
-    name: "{{ item }}"
+    name: "/opt/etcd"
     state: directory
     owner: root
     group: root
     mode: "u=rwx,g=rx,o=rx"
-  loop:
-    - /opt/etcd/
-    - /opt-data/etcd/
-  tags: setup
+  tags:
+    - setup
+
+- name: "确保数据目录"
+  ansible.builtin.file:
+    name: "/opt-data/etcd"
+    state: directory
+    owner: root
+    group: root
+    mode: "u=rwx,g=,o="
+  tags:
+    - setup
+
+# - name: "安装二进制文件"
+#   ansible.builtin.unarchive:
+#     src: etcd-v3.5.17-linux-arm64.tgz
+#     dest: /opt/etcd
+#     extra_opts:
+#       - "--strip-components=1"
+#       - "--show-stored-names"
+#   tags: 
+#     - setup
 
 - name: "拷贝服务定义文件"
   ansible.builtin.template:
@@ -28,7 +46,8 @@
   notify:
     - "重加载所有服务"
     - "重启ETCD服务"
-  tags: setup
+  tags:
+    - setup
 
 - name: "配置环境变量"
   ansible.builtin.blockinfile:
@@ -40,31 +59,63 @@
       alias etcdctl="etcdctl --endpoints=192.168.31.165:2379,192.168.31.166:2379,192.168.31.167:2379 --user root:root"
     state: present
     marker: "## {mark} add etcd block by ansible"
-  tags: setup
+  tags:
+    - setup
 
-###############################################################################
+##############################################################################
 
 - name: "停止ETCD服务"
   ansible.builtin.service:
     name: etcd
     state: stopped
     enabled: false
-  tags: stop
+  tags:
+    - stop
+    - uninstall
 
-###############################################################################
+##############################################################################
 
 - name: "启动ETCD服务"
   ansible.builtin.service:
     name: etcd
     state: started
     enabled: true
-  tags: startup
+  tags:
+    - startup
 
-###############################################################################
+##############################################################################
 
 - name: "重启ETCD服务"
   ansible.builtin.service:
     name: etcd
     state: restarted
     enabled: true
-  tags: restart
+  tags:
+    - restart
+
+##############################################################################
+
+- name: "删除ETCD服务"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /opt-data/etcd
+    - /opt/etcd
+  notify:
+    - "重加载所有服务"
+  tags:
+    - uninstall
+
+- name: "配置环境变量"
+  ansible.builtin.blockinfile:
+    name: /etc/zsh/zprofile
+    block: |
+      export ETCD_HOME=/opt/etcd
+      export PATH=$PATH:$ETCD_HOME
+      export ETCDCTL_API=3
+      alias etcdctl="etcdctl --endpoints=192.168.31.165:2379,192.168.31.166:2379,192.168.31.167:2379 --user root:root"
+    state: absent
+    marker: "## {mark} add etcd block by ansible"
+  tags:
+    - uninstall

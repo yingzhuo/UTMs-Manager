@@ -7,7 +7,6 @@ After=syslog.target network.target
 Type=simple
 User=root
 Group=root
-
 ExecStart=/opt/etcd/etcd \
     --data-dir=/opt-data/etcd/ \
     --name {{ machine_dict[ansible_host] }} \
@@ -15,7 +14,7 @@ ExecStart=/opt/etcd/etcd \
     --listen-peer-urls http://{{ ansible_host }}:{{ peer_port }} \
 	--advertise-client-urls http://{{ ansible_host }}:{{ client_port }} \
     --listen-client-urls http://{{ ansible_host }}:{{ client_port }} \
-	--initial-cluster {{ (machine_dict | dict2items)[0]['value'] }}=http://{{ (machine_dict | dict2items)[0]['key'] }}:{{ peer_port }},{{ (machine_dict | dict2items)[1]['value'] }}=http://{{ (machine_dict | dict2items)[1]['key'] }}:{{ peer_port }},{{ (machine_dict | dict2items)[1]['value'] }}=http://{{ (machine_dict | dict2items)[1]['key'] }}:{{ peer_port }} \
+	--initial-cluster {{ (machine_dict | dict2items)[0]['value'] }}=http://{{ (machine_dict | dict2items)[0]['key'] }}:{{ peer_port }},{{ (machine_dict | dict2items)[1]['value'] }}=http://{{ (machine_dict | dict2items)[1]['key'] }}:{{ peer_port }},{{ (machine_dict | dict2items)[2]['value'] }}=http://{{ (machine_dict | dict2items)[2]['key'] }}:{{ peer_port }} \
 	--initial-cluster-state new \
     --initial-cluster-token {{ cluster_token }}
 KillSignal=15
