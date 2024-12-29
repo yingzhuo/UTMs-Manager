@@ -35,3 +35,13 @@
 - name: "配置防火墙"
   community.general.ufw:
     state: disabled
+
+- name: "配置环境变量"
+  ansible.builtin.blockinfile:
+    path: /etc/hosts
+    block: |
+      192.168.31.165 ubuntu01
+      192.168.31.166 ubuntu02
+      192.168.31.167 ubuntu03
+    marker: "## {mark} add hosts block by ansible"
+    state: present

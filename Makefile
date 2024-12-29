@@ -102,9 +102,6 @@ startup-kafka: startup-zookeeper
 restart-kafka:
 	@ansible-playbook $(CURDIR)/PB-ManageKafka.yaml --tags restart
 
-cleanup-user-yingzhuo-home:
-	@ansible-playbook $(CURDIR)/PB-MangeUserYingZhuo.yaml --tags cleanup
-
 setup-rocketmq:
 	@ansible-playbook ./PB-ManageRocketMQ.yaml --tags setup
 
@@ -128,5 +125,4 @@ restart-rocketmq:
 	setup-kafka startup-kafka stop-kafka restart-kafka \
 	setup-rocketmq startup-rocketmq stop-rocketmq restart-rocketmq \
 	setup-ssh \
-	setup-ubuntu \
-	cleanup-user-yingzhuo-home
+	setup-ubuntu
