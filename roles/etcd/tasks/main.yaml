@@ -95,15 +95,22 @@
 
 ##############################################################################
 
-- name: "删除ETCD服务"
+- name: "删除ETCD服务定义文件"
+  ansible.builtin.file:
+    path: /etc/systemd/system/etcd.service
+    state: absent
+  notify:
+    - "重加载所有服务"
+  tags:
+    - uninstall
+
+- name: "删除ETCD安装目录和数据目录"
   ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   loop:
     - /opt-data/etcd
     - /opt/etcd
-  notify:
-    - "重加载所有服务"
   tags:
     - uninstall
 
