@@ -1,7 +1,7 @@
 java_home: "/opt/java-home"
 
 app_name: "playground"
-app_version: "0.3.1"
+app_version: "0.3.2"
 app_doc_url: "https://github.com/yingzhuo/spring-boot-playground"
 
 app_home: "/opt/playground"
@@ -11,10 +11,10 @@ app_lib_dir: "/opt/playground/lib"
 app_log_dir: "/var/log/playground"
 app_pid_dir: "/var/run"
 
-# app_heapdump_dir: ""
-# app_gclog_dir: ""
+app_heapdump_dir: ""
+app_gclog_dir: ""
 
-# envs: {}
+envs: {}
 
 java_opts:
   - "-server -Xmixed"
@@ -27,6 +27,6 @@ java_opts:
   - "-XX:+UsePerfData"
 
 spring_args:
-  - "--spring.profiles.active=prod,last_override"
+  - "--spring.profiles.active=prod,override"
 
-# spring_boot_launcher: "org.springframework.boot.loader.launch.PropertiesLauncher"
+spring_boot_launcher: "org.springframework.boot.loader.launch.PropertiesLauncher"

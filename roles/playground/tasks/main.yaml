@@ -70,7 +70,7 @@
 - name: "拷贝lastappend情景配置文件"
   ansible.builtin.template:
     src: config/application-last_override.yaml
-    dest: "{{ app_config_dir }}/application-last_override.yaml"
+    dest: "{{ app_config_dir }}/application-override.yaml"
     owner: root
     group: root
   notify:
