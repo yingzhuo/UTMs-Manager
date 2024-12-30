@@ -1,7 +1,0 @@
-sshd_config:
-
-  # ssh服务使用端口
-  port: 22
-
-  # 是否允许root账户登录
-  permit_root_login: "no"

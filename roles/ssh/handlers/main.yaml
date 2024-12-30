@@ -1,5 +1,0 @@
-- name: "重启sshd服务"
-  ansible.builtin.systemd_service:
-    name: ssh
-    state: restarted
-    enabled: true

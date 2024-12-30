@@ -36,9 +36,6 @@ stop-redis:
 restart-redis:
 	@ansible-playbook $(CURDIR)/PB-ManageRedis.yaml --tags restart
 
-setup-ssh:
-	@ansible-playbook $(CURDIR)/PB-SetupSSH.yaml
-
 setup-ubuntu:
 	@ansible-playbook $(CURDIR)/PB-SetupUbuntu.yaml
 
@@ -124,5 +121,4 @@ restart-rocketmq:
 	setup-zookeeper startup-zookeeper stop-zookeeper restart-zookeeper \
 	setup-kafka startup-kafka stop-kafka restart-kafka \
 	setup-rocketmq startup-rocketmq stop-rocketmq restart-rocketmq \
-	setup-ssh \
 	setup-ubuntu

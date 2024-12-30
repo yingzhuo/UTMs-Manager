@@ -1,5 +1,0 @@
-- name: "配置SSH服务"
-  hosts: "{{ HOSTS | default('all') }}"
-  gather_facts: false
-  roles:
-    - role: ssh

@@ -8,9 +8,9 @@
 # possible, but leave them commented.  Uncommented options override the
 # default value.
 
-#Include /etc/ssh/sshd_config.d/*.conf
+# Include /etc/ssh/sshd_config.d/*.conf
 
-Port {{ sshd_config.port }}
+Port 22
 #AddressFamily any
 #ListenAddress 0.0.0.0
 #ListenAddress ::
@@ -29,7 +29,7 @@ Port {{ sshd_config.port }}
 # Authentication:
 
 #LoginGraceTime 2m
-PermitRootLogin {{ sshd_config.permit_root_login }}
+PermitRootLogin no
 #StrictModes yes
 #MaxAuthTries 6
 #MaxSessions 10
