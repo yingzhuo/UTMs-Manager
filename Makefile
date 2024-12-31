@@ -114,14 +114,14 @@ stop-rocketmq:
 restart-rocketmq:
 	@ansible-playbook ./PB-ManageRocketMQ.yaml --tags restart
 
-.PHONY: usage github \
-	ping \
-	setup-mysql startup-mysql stop-mysql restart-mysql backup-mysql \
-	setup-redis startup-redis stop-redis restart-redis \
-	setup-docker startup-docker stop-docker restart-docker \
-	setup-etcd startup-etcd stop-etcd restart-etcd \
-	setup-xxljob startup-xxljob stop-xxljob restart-xxljob \
-	setup-zookeeper startup-zookeeper stop-zookeeper restart-zookeeper \
-	setup-kafka startup-kafka stop-kafka restart-kafka \
-	setup-rocketmq startup-rocketmq stop-rocketmq restart-rocketmq \
-	setup-ubuntu
+# .PHONY: usage github \
+# 	ping \
+# 	setup-mysql startup-mysql stop-mysql restart-mysql backup-mysql \
+# 	setup-redis startup-redis stop-redis restart-redis \
+# 	setup-docker startup-docker stop-docker restart-docker \
+# 	setup-etcd startup-etcd stop-etcd restart-etcd \
+# 	setup-xxljob startup-xxljob stop-xxljob restart-xxljob \
+# 	setup-zookeeper startup-zookeeper stop-zookeeper restart-zookeeper \
+# 	setup-kafka startup-kafka stop-kafka restart-kafka \
+# 	setup-rocketmq startup-rocketmq stop-rocketmq restart-rocketmq \
+# 	setup-ubuntu

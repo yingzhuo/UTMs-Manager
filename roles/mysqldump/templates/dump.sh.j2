@@ -1,5 +1,14 @@
 #!/usr/bin/env sh
 
+{% if dump_databases is defined %}
+# 备份指定的数据库
 {% for item in dump_databases %}
-{{ mysqldump_exec }} -u{{ mysql.username }} -p{{ mysql.password }} {{ item }} | /usr/bin/gzip -c > {{ backup_dir }}/{{ item }}-{{ '%Y%m%d%H%M' | strftime }}.sql.gz
+{{ mysqldump_exec }} -u{{ mysql.username }} -p{{ mysql.password }} {{ item }} --routines --triggers --events | /usr/bin/gzip -c > {{ backup_dir }}/{{ item }}-{{ '%Y%m%d%H%M' | strftime }}.sql.gz
 {% endfor %}
+
+{% else %}
+
+# 备份所有数据库
+{{ mysqldump_exec }} -u{{ mysql.username }} -p{{ mysql.password }} --all-databases --routines --triggers --events | /usr/bin/gzip -c > {{ backup_dir }}/all-{{ '%Y%m%d%H%M' | strftime }}.sql.gz
+
+{% endif %}
