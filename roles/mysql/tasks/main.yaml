@@ -8,14 +8,16 @@
 
 - name: "拷贝配置文件"
   ansible.builtin.template:
-    src: "{{ item }}"
-    dest: "/etc/mysql/mysql.conf.d/{{ item }}"
+    src: "{{ item.src }}"
+    dest: "/etc/mysql/mysql.conf.d/{{ item.dest }}"
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
   loop:
-    - mysqld.cnf.j2
-    - mysql.cnf.j2
+    - src: mysqld.cnf.j2
+      dest: mysqld.cnf
+    - src: mysql.cnf.j2
+      dest: mysql.cnf
   notify:
     - "重启MySQL服务"
   tags:
