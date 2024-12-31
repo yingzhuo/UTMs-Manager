@@ -31,6 +31,18 @@
   tags:
     - setup
 
+- name: "更新auto.cnf"
+  ansible.builtin.template:
+    src: auto.cnf.j2
+    dest: /var/lib/mysql/auto.cnf
+    owner: mysql
+    group: mysql
+    mode: '0640'
+  notify:
+    - "重启MySQL服务"
+  tags:
+    - setup
+
 - name: "更新管理账户属组"
   ansible.builtin.user:
     name: yingzhuo

@@ -10,12 +10,12 @@
 # -------------------------------------------------------------------------------------------------
 # 基础
 # -------------------------------------------------------------------------------------------------
-user		                                               = mysql
-port		                                               = 3306
-pid_file	                                               = /var/run/mysqld/mysqld.pid
-socket	                                                   = /var/run/mysqld/mysqld.sock
-datadir	                                                   = /var/lib/mysql
-tmpdir		                                               = /tmp
+user                                                       = mysql
+port                                                       = 3306
+pid_file                                                   = /var/run/mysqld/mysqld.pid
+socket                                                     = /var/run/mysqld/mysqld.sock
+datadir                                                    = /var/lib/mysql
+tmpdir                                                     = /tmp
 
 # -------------------------------------------------------------------------------------------------
 # 字符集
@@ -26,7 +26,7 @@ collation_server                                           = utf8mb4_0900_ai_ci
 # -------------------------------------------------------------------------------------------------
 # 网络
 # -------------------------------------------------------------------------------------------------
-bind_address		                                       = *
+bind_address                                               = *
 
 # -------------------------------------------------------------------------------------------------
 # 安全
@@ -117,7 +117,7 @@ log_error_verbosity                                        = 2
 # -------------------------------------------------------------------------------------------------
 # 慢查询日志 (拉低性能 建议需要调优时打开)
 # -------------------------------------------------------------------------------------------------
-slow_query_log		                                       = ON
+slow_query_log                                             = ON
 slow_query_log_file	                                       = /var/log/mysql/mysql-slow.log
 long_query_time                                            = 2
 log_queries_not_using_indexes                              = ON
@@ -128,13 +128,30 @@ log_queries_not_using_indexes                              = ON
 log_bin                                                    = binlog
 log_bin_trust_function_creators                            = OFF
 binlog_expire_logs_seconds	                               = 2592000
+binlog_format                                              = STATEMENT
 max_binlog_size                                            = 1G
 sync_binlog                                                = 1
 
-# binlog_do_db		                                       = include_database_name
-# binlog_ignore_db	                                       = include_database_name
+{% if ansible_ssh_host == '192.168.31.165' %}
+# -------------------------------------------------------------------------------------------------
+# 主从复制 (主)
+# -------------------------------------------------------------------------------------------------
+server_id                                                  = {{ master.server_id }}
+read_only                                                  = OFF
+{% endif %}
 
+{% if ansible_ssh_host == '192.168.31.166' %}
 # -------------------------------------------------------------------------------------------------
-# 从机配置
+# 主从复制 (从)
 # -------------------------------------------------------------------------------------------------
-# server-id		                                           = 1
+server_id                                                  = {{ slave.server_id }}
+read_only                                                  = OFF
+relay_log                                                  = mysql-relay
+
+slave_skip_errors                                          = 1032
+
+# 需要同步的数据库
+replicate-do-db                                            = SpringBootPlayground
+replicate-do-db                                            = xxl_job
+replicate-do-db                                            = test
+{% endif %}

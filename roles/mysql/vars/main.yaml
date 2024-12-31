@@ -1,0 +1,7 @@
+master:
+  server_uuid: "721767ca-f580-42e1-80f8-ad8189fa932d"
+  server_id: 1
+
+slave:
+  server_uuid: "8541ccf0-8f3a-46e0-bb7e-3beb9d206373"
+  server_id: 2
