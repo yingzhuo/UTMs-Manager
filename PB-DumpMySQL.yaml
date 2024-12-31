@@ -1,0 +1,5 @@
+- name: "备份数据库"
+  hosts: "{{ HOSTS | default('mysql') }}"
+  gather_facts: false
+  roles:
+    - role: mysqldump

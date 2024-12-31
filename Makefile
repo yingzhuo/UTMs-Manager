@@ -24,6 +24,9 @@ stop-mysql:
 restart-mysql:
 	@ansible-playbook $(CURDIR)/PB-ManageMySQL.yaml --tags restart
 
+backup-mysql:
+	@ansible-playbook $(CURDIR)/PB-DumpMySQL.yaml
+
 setup-redis:
 	@ansible-playbook $(CURDIR)/PB-ManageRedis.yaml --tags setup
 
@@ -113,7 +116,7 @@ restart-rocketmq:
 
 .PHONY: usage github \
 	ping \
-	setup-mysql startup-mysql stop-mysql restart-mysql \
+	setup-mysql startup-mysql stop-mysql restart-mysql backup-mysql \
 	setup-redis startup-redis stop-redis restart-redis \
 	setup-docker startup-docker stop-docker restart-docker \
 	setup-etcd startup-etcd stop-etcd restart-etcd \

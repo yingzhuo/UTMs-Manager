@@ -1,0 +1,12 @@
+fetch_dir: "/Users/yingzhuo/临时"
+backup_dir: "/opt-backup/mysql"
+mysqldump_exec: "/usr/bin/mysqldump"
+
+mysql:
+  username: root
+  password: root
+
+dump_databases:
+- "SpringBootPlayground"
+- "test"
+- "xxl_job"

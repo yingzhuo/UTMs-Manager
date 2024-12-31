@@ -126,9 +126,9 @@ log_queries_not_using_indexes                              = ON
 # 二进制日志
 # -------------------------------------------------------------------------------------------------
 log_bin                                                    = binlog
-log_bin_trust_function_creators                            = OFF
-binlog_expire_logs_seconds	                               = 2592000
-binlog_format                                              = STATEMENT
+log_bin_trust_function_creators                            = ON
+binlog_expire_logs_seconds                                 = 2592000
+binlog_format                                              = MIXED
 max_binlog_size                                            = 1G
 sync_binlog                                                = 1
 

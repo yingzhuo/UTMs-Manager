@@ -1,0 +1,21 @@
+- name: "保证临时目录"
+  ansible.builtin.file:
+    path: "{{ backup_dir }}"
+    state: directory
+
+- name: "拷贝临时备份脚本"
+  ansible.builtin.template:
+    src: dump.sh.j2
+    dest: /tmp/dump.sh
+    owner: root
+    group: root
+    mode: '0700'
+
+- name: "执行备份临时脚本"
+  ansible.builtin.shell:
+    cmd: /tmp/dump.sh
+
+- name: "删除临时备份脚本"
+  ansible.builtin.file:
+    path: /tmp/dump.sh
+    state: absent

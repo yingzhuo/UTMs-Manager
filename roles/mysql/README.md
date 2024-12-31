@@ -23,9 +23,8 @@ FLUSH PRIVILEGES;
 -------------------
 
 -- 创建账户
-CREATE USER 'slave'@'%' IDENTIFIED BY 'slave';
+CREATE USER 'slave'@'%' IDENTIFIED WITH mysql_native_password BY 'slave';
 GRANT REPLICATION SLAVE ON *.* TO 'slave'@'%';
-ALTER USER 'slave'@'%' IDENTIFIED WITH mysql_native_password BY 'slave';
 FLUSH PRIVILEGES;
 
 -- 重置所有binlog

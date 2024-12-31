@@ -1,5 +1,5 @@
 - name: "管理JavaWeb项目 - Playground"
-  hosts: "{{ HOSTS | default('192.168.31.167') }}"
+  hosts: "{{ HOSTS | default('ubuntu03') }}"
   gather_facts: false
   roles:
     - role: playground

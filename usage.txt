@@ -18,6 +18,7 @@ mysql:
     make stop-mysql
     make setup-mysql
     make restart-mysql
+    make backup-mysql
 
 redis:
     make startup-redis
