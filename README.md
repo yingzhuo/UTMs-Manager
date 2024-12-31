@@ -15,6 +15,10 @@ make usage
 
 ## 组件说明
 
+#### MySQL
+
+![MySQL](./images/MySQL.png)
+
 #### Redis
 
 ![Redis](./images/Redis.png)
