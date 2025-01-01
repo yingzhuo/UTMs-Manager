@@ -6,6 +6,14 @@
 
 ###############################################################################
 
+- name: "安装MySQL"
+  ansible.builtin.apt:
+    name:
+      - mysql-server
+    state: present
+  tags:
+    - setup
+
 - name: "拷贝配置文件"
   ansible.builtin.template:
     src: "{{ item.src }}"
