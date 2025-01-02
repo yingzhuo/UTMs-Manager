@@ -118,7 +118,7 @@ log_error_verbosity                                        = 2
 # 慢查询日志 (拉低性能 建议需要调优时打开)
 # -------------------------------------------------------------------------------------------------
 slow_query_log                                             = ON
-slow_query_log_file	                                       = /var/log/mysql/mysql-slow.log
+slow_query_log_file	                                       = /var/log/mysql/slow.log
 long_query_time                                            = 2
 log_queries_not_using_indexes                              = ON
 
@@ -146,7 +146,7 @@ read_only                                                  = OFF
 # -------------------------------------------------------------------------------------------------
 server_id                                                  = {{ slave.server_id }}
 read_only                                                  = OFF
-relay_log                                                  = mysql-relay
+relay_log                                                  = relay
 
 slave_skip_errors                                          = 1032
 
