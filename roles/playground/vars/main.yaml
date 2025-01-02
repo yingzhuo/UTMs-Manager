@@ -1,7 +1,7 @@
 java_home: "/opt/java-home"
 
 app_name: "playground"
-app_version: "0.3.2"
+app_version: "0.3.3"
 app_doc_url: "https://github.com/yingzhuo/spring-boot-playground"
 
 app_home: "/opt/playground"
@@ -27,6 +27,6 @@ java_opts:
   - "-XX:+UsePerfData"
 
 spring_args:
-  - "--spring.profiles.active=prod,override"
+  - "--spring.profiles.active=prod,swagger,override"
 
 spring_boot_launcher: "org.springframework.boot.loader.launch.PropertiesLauncher"
