@@ -55,3 +55,20 @@
       192.168.31.167 ubuntu03
     marker: "## {mark} add hosts block by ansible"
     state: present
+
+- name: "拷贝更新脚本"
+  ansible.builtin.template:
+    src: update-ubuntu.j2
+    dest: /usr/local/sbin/update-ubuntu
+    mode: '0755'
+
+- name: "拷贝清理脚本"
+  ansible.builtin.template:
+    src: clean-ubuntu.j2
+    dest: /usr/local/sbin/clean-ubuntu
+    mode: '0755'
+
+- name: "调用清理脚本"
+  ansible.builtin.shell:
+    cmd: /usr/local/sbin/clean-ubuntu
+  changed_when: false

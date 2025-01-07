@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+sudo apt-get autoremove -y
+sudo apt-get autoclean
+sudo apt-get clean
+sudo journalctl --vacuum-time=1d
+sudo find /var/log/ -name '*.gz' -delete
+sudo find /var/log/ -name '*.log.1' -delete
+sudo find /var/log/ -name 'syslog.1' -delete
