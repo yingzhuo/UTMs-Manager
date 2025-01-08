@@ -6,6 +6,13 @@
 
 ###############################################################################
 
+- name: "安装一些软件"
+  ansible.builtin.apt:
+    name:
+      - haveged
+    state: present
+  tags: setup
+
 - name: "拷贝配置文件"
   ansible.builtin.template:
     src: daemon.json
