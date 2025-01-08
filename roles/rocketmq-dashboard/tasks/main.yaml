@@ -1,0 +1,27 @@
+- name: "检查tag"
+  ansible.builtin.debug:
+    msg: "[错误]没有指定tags"
+  when: "ansible_run_tags == ['all']"
+  failed_when: true
+
+###############################################################################
+
+- name: "创建安装目录"
+  ansible.builtin.file:
+    path: /opt/rocketmq-dashboard
+    state: directory
+  tags: 
+    - setup
+
+- name: "拷贝docker-compose文件"
+  ansible.builtin.template:
+    src: docker-compose.yaml.j2
+    dest: /opt/rocketmq-dashboard/docker-compose.yaml
+  tags:
+    - setup
+
+- name: "启动程序"
+  ansible.builtin.shell:
+    cmd: /usr/local/sbin/docker-compose -f /opt/rocketmq-dashboard/docker-compose.yaml up -d
+  tags:
+    - setup

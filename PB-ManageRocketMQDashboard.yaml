@@ -1,0 +1,5 @@
+- name: "安装启动RocketMQ Dashboard"
+  hosts: "{{ HOSTS | default('rocketmq_dashboard') }}"
+  gather_facts: false
+  roles:
+    - role: rocketmq-dashboard
