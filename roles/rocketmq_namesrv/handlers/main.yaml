@@ -1,0 +1,9 @@
+- name: "重加载所有服务"
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+
+- name: "重启NameServer"
+  ansible.builtin.service:
+    name: "rocketmq-namesrv"
+    state: restarted
+    enabled: true

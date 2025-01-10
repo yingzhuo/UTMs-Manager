@@ -7,9 +7,9 @@ After=syslog.target network.target
 Type=simple
 User=root
 Group=root
-Environment="JAVA_HOME={{ rocketmq_all.java_home }}"
-Environment="ROCKETMQ_HOME={{ rocketmq_all.rocketmq_home }}"
-ExecStart=/opt/rocketmq/bin/mqbroker -n localhost:9876 --enable-proxy
+Environment="JAVA_HOME={{ java_home }}"
+Environment="ROCKETMQ_HOME={{ rocketmq_home }}"
+ExecStart={{ rocketmq_home }}/bin/mqbroker -n {{ name_server_addresses }} -c {{ rocketmq_home }}/conf/broker-this.properties
 ExecStop=/opt/bin/mqshutdown broker
 SuccessExitStatus=143
 WorkingDirectory=/opt/rocketmq

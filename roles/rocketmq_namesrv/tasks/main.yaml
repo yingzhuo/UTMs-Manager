@@ -1,0 +1,92 @@
+- name: "检查tag"
+  ansible.builtin.debug:
+    msg: "[错误]没有指定tags"
+  when: "ansible_run_tags == ['all']"
+  failed_when: true
+
+###############################################################################
+
+- name: "创建日志目录"
+  ansible.builtin.file:
+    path: "{{ log_dir }}"
+    state: directory
+  tags:
+    - setup
+
+- name: "拷贝启动文件"
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "u=rwx,g=rx,o=rx"
+  loop:
+    - src: runserver.sh
+      dest: "{{ rocketmq_home }}/bin/runserver.sh"
+    - src: mqnamesrv
+      dest: "{{ rocketmq_home }}/bin/mqnamesrv"
+  notify:
+    - "重启NameServer"
+  tags:
+    - setup
+
+- name: "拷贝logback文件"
+  ansible.builtin.template:
+    src: rmq.namesrv.logback.xml
+    dest: "{{ rocketmq_home }}/conf/rmq.namesrv.logback.xml"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  notify:
+    - "重启NameServer"
+  tags:
+    - setup
+
+- name: "拷贝服务定义文件"
+  ansible.builtin.template:
+    src: rocketmq-namesrv.service
+    dest: /etc/systemd/system/rocketmq-namesrv.service
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  notify:
+    - "重加载所有服务"
+    - "重启NameServer"
+  tags:
+    - setup
+
+###############################################################################
+
+- name: "关闭RocketMQ服务 (NameServer)"
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: stopped
+    enabled: false
+  loop:
+    - "rocketmq-namesrv"
+  tags: 
+    - stop
+
+###############################################################################
+
+- name: "开启RocketMQ服务 (NameServer)"
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - "rocketmq-namesrv"
+  tags: 
+    - startup
+
+###############################################################################
+
+- name: "重启RocketMQ服务 (NameServer)"
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: restarted
+    enabled: true
+  loop:
+    - "rocketmq-namesrv"
+  tags: 
+    - restart

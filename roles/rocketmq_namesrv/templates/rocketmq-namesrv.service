@@ -7,8 +7,8 @@ After=syslog.target network.target
 Type=simple
 User=root
 Group=root
-Environment="JAVA_HOME={{ rocketmq_all.java_home }}"
-Environment="ROCKETMQ_HOME={{ rocketmq_all.rocketmq_home }}"
+Environment="JAVA_HOME={{ java_home }}"
+Environment="ROCKETMQ_HOME={{ rocketmq_home }}"
 ExecStart=/opt/rocketmq/bin/mqnamesrv
 ExecStop=/opt/bin/mqshutdown namesrv
 SuccessExitStatus=143

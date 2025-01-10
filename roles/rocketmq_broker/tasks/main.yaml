@@ -6,94 +6,99 @@
 
 ###############################################################################
 
-- name: "拷贝配置文件 (NameServer)"
-  ansible.builtin.template:
-    src: runserver.sh
-    dest: /opt/rocketmq/bin/runserver.sh
-    owner: root
-    group: root
-  tags: 
+- name: "创建日志目录"
+  ansible.builtin.file:
+    path: "{{ log_dir }}"
+    state: directory
+  tags:
     - setup
-  notify:
-    - "重启NameServer"
 
-- name: "拷贝服务定义文件 (NameServer)"
+- name: "拷贝启动文件"
   ansible.builtin.template:
-    src: rocketmq-namesrv.service
-    dest: /etc/systemd/system/rocketmq-namesrv.service
-  tags: 
-    - setup
-  notify:
-    - "重加载所有服务"
-    - "重启NameServer"
-
-- name: "拷贝mqbroker文件"
-  ansible.builtin.template:
-    src: mqbroker
-    dest: /opt/rocketmq/bin/mqbroker
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: root
     mode: "u=rwx,g=rx,o=rx"
-  tags: 
-    - setup
+  loop:
+    - src: runbroker.sh
+      dest: "{{ rocketmq_home }}/bin/runbroker.sh"
+    - src: mqbroker
+      dest: "{{ rocketmq_home }}/bin/mqbroker"
   notify:
     - "重加载所有服务"
     - "重启Broker"
+  tags:
+    - setup
 
-- name: "拷贝配置文件 (Broker)"
+- name: "拷贝主配置文件"
   ansible.builtin.template:
-    src: runbroker.sh
-    dest: /opt/rocketmq/bin/runbroker.sh
+    src: broker-this.properties
+    dest: "{{ rocketmq_home }}/conf/broker-this.properties"
     owner: root
     group: root
-  tags: 
-    - setup
   notify:
-    - "重加载所有服务"
     - "重启Broker"
+  tags:
+    - setup
 
-- name: "拷贝服务定义文件 (Broker)"
+- name: "拷贝logback文件"
+  ansible.builtin.template:
+    src: rmq.broker.logback.xml
+    dest: "{{ rocketmq_home }}/conf/rmq.broker.logback.xml"
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+  notify:
+      - "重启Broker"
+  tags:
+      - setup
+
+- name: "拷贝服务定义文件"
   ansible.builtin.template:
     src: rocketmq-broker.service
     dest: /etc/systemd/system/rocketmq-broker.service
-  tags: 
-    - setup
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
   notify:
     - "重加载所有服务"
     - "重启Broker"
+  tags:
+    - setup
 
 ###############################################################################
 
-- name: "关闭rocketmq服务"
+- name: "关闭RocketMQ服务 (Broker)"
   ansible.builtin.service:
     name: "{{ item }}"
     state: stopped
     enabled: false
   loop:
     - "rocketmq-broker"
-    - "rocketmq-namesrv"
-  tags: stop
+  tags: 
+    - stop
 
 ###############################################################################
 
-- name: "开启rocketmq服务"
+- name: "开启RocketMQ服务 (Broker)"
   ansible.builtin.service:
     name: "{{ item }}"
     state: started
     enabled: true
   loop:
-    - "rocketmq-namesrv"
     - "rocketmq-broker"
-  tags: startup
+  tags: 
+    - startup
 
 ###############################################################################
 
-- name: "开启rocketmq服务"
+- name: "重启RocketMQ服务 (Broker)"
   ansible.builtin.service:
     name: "{{ item }}"
     state: restarted
     enabled: true
   loop:
-    - "rocketmq-namesrv"
     - "rocketmq-broker"
-  tags: restart
+  tags: 
+    - restart

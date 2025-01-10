@@ -1,7 +1,0 @@
-rocketmq_all:
-  memory:
-    heap_zie: "256m"
-    young_generation: "256m"
-
-  java_home: "/opt/java-home"
-  rocketmq_home: "/opt/rocketmq"

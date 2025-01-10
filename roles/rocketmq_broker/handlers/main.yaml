@@ -2,12 +2,6 @@
   ansible.builtin.systemd_service:
     daemon_reload: true
 
-- name: "重启NameServer"
-  ansible.builtin.service:
-    name: "rocketmq-namesrv"
-    state: restarted
-    enabled: true
-
 - name: "重启Broker"
   ansible.builtin.service:
     name: "rocketmq-broker"
