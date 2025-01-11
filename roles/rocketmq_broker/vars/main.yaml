@@ -2,6 +2,7 @@ java_home: /opt/java-home
 rocketmq_home: /opt/rocketmq
 
 log_dir: /var/log/rocketmq
+data_dir: /opt-data/rocketmq
 
 broker_names:
   192.168.31.165: broker_165

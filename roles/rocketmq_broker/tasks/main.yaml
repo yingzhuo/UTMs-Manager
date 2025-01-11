@@ -6,9 +6,16 @@
 
 ###############################################################################
 
-- name: "创建日志目录"
+- name: "保证日志目录"
   ansible.builtin.file:
     path: "{{ log_dir }}"
+    state: directory
+  tags:
+    - setup
+
+- name: "保证数据目录"
+  ansible.builtin.file:
+    path: "{{ data_dir }}"
     state: directory
   tags:
     - setup
