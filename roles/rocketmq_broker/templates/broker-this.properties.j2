@@ -1,8 +1,27 @@
+# 所属集群名字，名字一样则构成同一个集群
 brokerClusterName=DefaultCluster
+
+# Broker的名字，名字一样的节点就是一组主从节点
 brokerName={{ broker_names[ansible_host] }}
+
+# Broker的ID，0表示Master，非零表示Slave
 brokerId=0
+
+# 文件删除策略
 deleteWhen=04
 fileReservedTime=48
+
+# Broker角色
 brokerRole=ASYNC_MASTER
+
+# 刷盘策略
 flushDiskType=ASYNC_FLUSH
+
+# 数据目录
 storePathRootDir={{ data_dir }}
+
+# NameServer地址 (多个时用分号分隔)
+namesrvAddr={{ name_server_addresses }}
+
+# 监听端口
+listenPort=10911

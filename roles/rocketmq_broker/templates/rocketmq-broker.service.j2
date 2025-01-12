@@ -9,7 +9,7 @@ User=root
 Group=root
 Environment="JAVA_HOME={{ java_home }}"
 Environment="ROCKETMQ_HOME={{ rocketmq_home }}"
-ExecStart={{ rocketmq_home }}/bin/mqbroker -n {{ name_server_addresses }} -c {{ rocketmq_home }}/conf/broker-this.properties
+ExecStart={{ rocketmq_home }}/bin/mqbroker -c {{ rocketmq_home }}/conf/broker-this.properties
 ExecStop=/opt/bin/mqshutdown broker
 SuccessExitStatus=143
 WorkingDirectory=/opt/rocketmq
