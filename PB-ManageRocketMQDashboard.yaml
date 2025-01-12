@@ -1,0 +1,5 @@
+- name: "管理Dashboard"
+  hosts: "{{ HOSTS | default('rocketmq_dashboard') }}"
+  gather_facts: false
+  roles:
+    - role: rocketmq_dashboard

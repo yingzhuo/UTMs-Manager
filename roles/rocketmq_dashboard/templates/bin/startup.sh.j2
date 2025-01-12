@@ -1,0 +1,62 @@
+#!/bin/sh
+
+# ----------------------------------------------------------------------------------------------
+# Environment Variables
+# ----------------------------------------------------------------------------------------------
+export JAVA_HOME="{{ java_home }}"
+export JAVA="${JAVA_HOME}/bin/java"
+{% if envs is defined %}
+{% for k, v in envs.items() %}
+export {{ k }}="{{ v }}"
+{% endfor %}
+{% endif %}
+
+# ----------------------------------------------------------------------------------------------
+# VM
+# ----------------------------------------------------------------------------------------------
+{% if java_opts is defined %}
+{% for item in java_opts %}
+JAVA_OPT="${JAVA_OPT} {{ item }}"
+{% else %}
+JAVA_OPT=""
+{% endfor %}
+{% endif %}
+
+{% if app_heapdump_dir is defined and app_heapdump_dir != '' %}
+# HeapDump
+JAVA_OPT="${JAVA_OPT} -XX:+HeapDumpOnOutOfMemoryError -XX:+HeapDumpBeforeFullGC -XX:HeapDumpPath={{ app_heapdump_dir }}/{{ app_name }}_heapdump.hprof"
+{% endif %}
+
+{% if app_gclog_dir is defined and app_gclog_dir != '' %}
+# GC-LOG
+JAVA_OPT="${JAVA_OPT} -verbose:gc -Xlog:gc*:file={{ app_gclog_dir }}/{{ app_name }}_gc_%p_%t.log:time,tags:filecount=5,filesize=32M"
+{% endif %}
+
+# ----------------------------------------------------------------------------------------------
+# System Properties
+# ----------------------------------------------------------------------------------------------
+JAVA_OPT_EXT="${JAVA_OPT_EXT} -Djava.security.egd=file:/dev/./urandom"
+JAVA_OPT_EXT="${JAVA_OPT_EXT} -Dloader.system=false"
+JAVA_OPT_EXT="${JAVA_OPT_EXT} -Dloader.home={{ app_home }}"
+JAVA_OPT_EXT="${JAVA_OPT_EXT} -Dloader.path={{ app_lib_dir }},{{ app_config_dir }}"
+JAVA_OPT_EXT="${JAVA_OPT_EXT} -Dspring.pid.file={{ app_pid_dir }}/{{ app_name }}.pid"
+JAVA_OPT_EXT="${JAVA_OPT_EXT} -Dspring.config.name=application"
+JAVA_OPT_EXT="${JAVA_OPT_EXT} -Dspring.config.additional-location=file:{{ app_config_dir }}/"
+JAVA_OPT_EXT="${JAVA_OPT_EXT} -Dlogging.config={{ app_home }}/config/logback.xml"
+
+# ----------------------------------------------------------------------------------------------
+# Boot the shit
+# ----------------------------------------------------------------------------------------------
+if [ -x {{ app_home }}/bin/init.sh ]; then
+    {{ app_home }}/bin/init.sh
+fi
+
+JAR="{{ app_home }}/{{ app_name }}-{{ app_version }}.jar"
+
+${JAVA} \
+  ${JAVA_OPT} \
+  ${JAVA_OPT_EXT} \
+  -cp ${JAR} \
+  {{ spring_boot_launcher | default('org.springframework.boot.loader.launch.PropertiesLauncher') }} \
+  {% for item in spring_args %}{{ item }} \{% endfor %} 
+  "$@"

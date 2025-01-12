@@ -56,6 +56,12 @@ rocketmq:
     make setup-rocketmq
     make restart-rocketmq
 
+setup-rocketmq-dashboard:
+    make startup-rocketmq-dashboard
+    make stop-rocketmq-dashboard
+    make setup-rocketmq-dashboard
+    make restart-rocketmq-dashboard
+
 OS:
     make setup-ubuntu
 ===========================================================

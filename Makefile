@@ -113,3 +113,15 @@ stop-rocketmq:
 
 restart-rocketmq:
 	@ansible-playbook ./PB-ManageRocketMQ.yaml --tags restart
+
+setup-rocketmq-dashboard:
+	@ansible-playbook ./PB-ManageRocketMQDashboard.yaml --tags setup
+
+startup-rocketmq-dashboard:
+	@ansible-playbook ./PB-ManageRocketMQDashboard.yaml --tags startup
+
+stop-rocketmq-dashboard:
+	@ansible-playbook ./PB-ManageRocketMQDashboard.yaml --tags stop
+
+restart-rocketmq-dashboard:
+	@ansible-playbook ./PB-ManageRocketMQDashboard.yaml --tags restart

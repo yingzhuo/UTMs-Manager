@@ -1,0 +1,36 @@
+java_home: "/opt/java-home-8"
+
+app_name: "rocketmq-dashboard"
+app_version: "1.0.0"
+app_doc_url: "https://github.com/yingzhuo/spring-boot-playground"
+
+app_home: "/opt/rocketmq-dashboard"
+app_config_dir: "/opt/rocketmq-dashboard/config"
+app_bin_dir: "/opt/rocketmq-dashboard/bin"
+app_lib_dir: "/opt/rocketmq-dashboard/lib"
+app_log_dir: "/var/log/rocketmq-dashboard"
+app_pid_dir: "/var/run"
+
+app_heapdump_dir: ""
+app_gclog_dir: ""
+
+data_dir: /opt-data/rocketmq-dashboard
+
+envs: {}
+
+# java_opts:
+#   - "-server -Xmixed"
+#   - "-XX:-PrintCommandLineFlags -XX:-PrintFlagsInitial -XX:-PrintFlagsFinal"
+#   - "-XX:ThreadStackSize=512k"
+#   - "-XX:InitialHeapSize=256m -XX:MinHeapSize=256m -XX:NewRatio=2 -XX:SurvivorRatio=8 -XX:+UseTLAB"
+#   - "-XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=320m -XX:+UseCompressedOops"
+#   - "-XX:MaxDirectMemorySize=256m"
+#   - "-XX:+UseG1GC -XX:MaxGCPauseMillis=300"
+#   - "-XX:+UsePerfData"
+
+spring_args:
+  - "--spring.profiles.active=override"
+
+spring_boot_launcher: "org.springframework.boot.loader.PropertiesLauncher"
+
+name_server_addresses: "192.168.31.165:9876;192.168.31.166:9876;192.168.31.167:9876"
