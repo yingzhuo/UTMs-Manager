@@ -6,14 +6,14 @@
 
 ###############################################################################
 
-- name: "创建日志目录"
+- name: "创建日志目录 (NameServer)"
   ansible.builtin.file:
     path: "{{ log_dir }}"
     state: directory
   tags:
     - setup
 
-- name: "拷贝启动文件"
+- name: "拷贝启动文件 (NameServer)"
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -21,18 +21,18 @@
     group: root
     mode: "u=rwx,g=rx,o=rx"
   loop:
-    - src: runserver.sh
+    - src: runserver.sh.j2
       dest: "{{ rocketmq_home }}/bin/runserver.sh"
-    - src: mqnamesrv
+    - src: mqnamesrv.j2
       dest: "{{ rocketmq_home }}/bin/mqnamesrv"
   notify:
     - "重启NameServer"
   tags:
     - setup
 
-- name: "拷贝logback文件"
+- name: "拷贝logback文件 (NameServer)"
   ansible.builtin.template:
-    src: rmq.namesrv.logback.xml
+    src: rmq.namesrv.logback.xml.j2
     dest: "{{ rocketmq_home }}/conf/rmq.namesrv.logback.xml"
     owner: root
     group: root
@@ -44,7 +44,7 @@
 
 - name: "拷贝服务定义文件"
   ansible.builtin.template:
-    src: rocketmq-namesrv.service
+    src: rocketmq-namesrv.service.j2
     dest: /etc/systemd/system/rocketmq-namesrv.service
     owner: root
     group: root

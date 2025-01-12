@@ -20,7 +20,7 @@
   tags:
     - setup
 
-- name: "拷贝启动文件"
+- name: "拷贝启动文件 (Broker)"
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -28,9 +28,9 @@
     group: root
     mode: "u=rwx,g=rx,o=rx"
   loop:
-    - src: runbroker.sh
+    - src: runbroker.sh.j2
       dest: "{{ rocketmq_home }}/bin/runbroker.sh"
-    - src: mqbroker
+    - src: mqbroker.j2
       dest: "{{ rocketmq_home }}/bin/mqbroker"
   notify:
     - "重加载所有服务"
@@ -38,9 +38,9 @@
   tags:
     - setup
 
-- name: "拷贝主配置文件"
+- name: "拷贝主配置文件 (Broker)"
   ansible.builtin.template:
-    src: broker-this.properties
+    src: broker-this.properties.j2
     dest: "{{ rocketmq_home }}/conf/broker-this.properties"
     owner: root
     group: root
@@ -49,9 +49,9 @@
   tags:
     - setup
 
-- name: "拷贝logback文件"
+- name: "拷贝logback文件 (Broker)"
   ansible.builtin.template:
-    src: rmq.broker.logback.xml
+    src: rmq.broker.logback.xml.j2
     dest: "{{ rocketmq_home }}/conf/rmq.broker.logback.xml"
     owner: root
     group: root
@@ -61,9 +61,9 @@
   tags:
       - setup
 
-- name: "拷贝服务定义文件"
+- name: "拷贝服务定义文件 (Broker)"
   ansible.builtin.template:
-    src: rocketmq-broker.service
+    src: rocketmq-broker.service.j2
     dest: /etc/systemd/system/rocketmq-broker.service
     owner: root
     group: root
