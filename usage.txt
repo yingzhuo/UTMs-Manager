@@ -56,7 +56,7 @@ rocketmq:
     make setup-rocketmq
     make restart-rocketmq
 
-setup-rocketmq-dashboard:
+rocketmq-dashboard:
     make startup-rocketmq-dashboard
     make stop-rocketmq-dashboard
     make setup-rocketmq-dashboard
