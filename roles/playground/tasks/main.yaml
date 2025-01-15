@@ -67,9 +67,9 @@
   tags:
     - setup
 
-- name: "拷贝lastappend情景配置文件"
+- name: "拷贝override情景配置文件"
   ansible.builtin.template:
-    src: config/application-override.yaml
+    src: config/application-override.yaml.j2
     dest: "{{ app_config_dir }}/application-override.yaml"
     owner: root
     group: root
