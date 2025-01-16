@@ -103,25 +103,37 @@ restart-kafka:
 	@ansible-playbook $(CURDIR)/PB-ManageKafka.yaml --tags restart
 
 setup-rocketmq:
-	@ansible-playbook ./PB-ManageRocketMQ.yaml --tags setup
+	@ansible-playbook $(CURDIR)/PB-ManageRocketMQ.yaml --tags setup
 
 startup-rocketmq:
-	@ansible-playbook ./PB-ManageRocketMQ.yaml --tags startup
+	@ansible-playbook $(CURDIR)/PB-ManageRocketMQ.yaml --tags startup
 
 stop-rocketmq:
-	@ansible-playbook ./PB-ManageRocketMQ.yaml --tags stop
+	@ansible-playbook $(CURDIR)/PB-ManageRocketMQ.yaml --tags stop
 
 restart-rocketmq:
-	@ansible-playbook ./PB-ManageRocketMQ.yaml --tags restart
+	@ansible-playbook $(CURDIR)/PB-ManageRocketMQ.yaml --tags restart
 
 setup-rocketmq-dashboard:
-	@ansible-playbook ./PB-ManageRocketMQDashboard.yaml --tags setup
+	@ansible-playbook $(CURDIR)/PB-ManageRocketMQDashboard.yaml --tags setup
 
 startup-rocketmq-dashboard:
-	@ansible-playbook ./PB-ManageRocketMQDashboard.yaml --tags startup
+	@ansible-playbook $(CURDIR)/PB-ManageRocketMQDashboard.yaml --tags startup
 
 stop-rocketmq-dashboard:
-	@ansible-playbook ./PB-ManageRocketMQDashboard.yaml --tags stop
+	@ansible-playbook $(CURDIR)/PB-ManageRocketMQDashboard.yaml --tags stop
 
 restart-rocketmq-dashboard:
-	@ansible-playbook ./PB-ManageRocketMQDashboard.yaml --tags restart
+	@ansible-playbook $(CURDIR)/PB-ManageRocketMQDashboard.yaml --tags restart
+
+setup-nacos:
+	@ansible-playbook $(CURDIR)/PB-ManageNacos.yaml --tags setup
+
+startup-nacos:
+	@ansible-playbook $(CURDIR)/PB-ManageNacos.yaml --tags startup
+
+stop-nacos:
+	@ansible-playbook $(CURDIR)/PB-ManageNacos.yaml --tags stop
+
+restart-nacos:
+	@ansible-playbook $(CURDIR)/PB-ManageNacos.yaml --tags restart

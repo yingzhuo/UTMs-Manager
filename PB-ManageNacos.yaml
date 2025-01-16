@@ -1,0 +1,5 @@
+- name: "管理Nacos"
+  hosts: "{{ HOSTS | default('nacos') }}"
+  gather_facts: false
+  roles:
+    - role: nacos

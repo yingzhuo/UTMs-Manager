@@ -1,0 +1,72 @@
+- name: "检查tag"
+  ansible.builtin.debug:
+    msg: "[错误]没有指定tags"
+  when: "ansible_run_tags == ['all']"
+  failed_when: true
+
+###############################################################################
+
+- name: "拷贝配置文件"
+  ansible.builtin.template:
+    src: application.properties.j2
+    dest: "/opt/nacos/conf/application.properties"
+    owner: root
+    group: root
+  notify:
+    - "重启Nacos"
+  tags:
+    - setup
+
+- name: "拷贝启动文件"
+  ansible.builtin.template:
+    src: startup.sh.j2
+    dest: "/opt/nacos/bin/startup.sh"
+    owner: root
+    group: root
+    mode: "0755"
+  notify:
+    - "重启Nacos"
+  tags:
+    - setup
+
+- name: "拷贝服务定义文件"
+  ansible.builtin.template:
+    src: nacos.service.j2
+    dest: /etc/systemd/system/nacos.service
+    owner: root
+    group: root
+  notify:
+    - "重加载所有服务"
+    - "重启Nacos"
+  tags:
+    - setup
+
+###############################################################################
+
+- name: "关闭Nacos"
+  ansible.builtin.service:
+    name: nacos
+    state: stopped
+    enabled: false
+  tags:
+    - stop
+
+###############################################################################
+
+- name: "启动Nacos"
+  ansible.builtin.service:
+    name: nacos
+    state: started
+    enabled: true
+  tags:
+    - startup
+
+###############################################################################
+
+- name: "重启Nacos"
+  ansible.builtin.service:
+    name: nacos
+    state: restarted
+    enabled: true
+  tags:
+    - restart

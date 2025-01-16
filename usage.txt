@@ -62,6 +62,12 @@ rocketmq-dashboard:
     make setup-rocketmq-dashboard
     make restart-rocketmq-dashboard
 
+nacos:
+    make startup-nacos
+    make stop-nacos
+    make setup-nacos
+    make restart-nacos
+
 OS:
     make setup-ubuntu
 ===========================================================

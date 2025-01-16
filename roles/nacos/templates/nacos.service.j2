@@ -1,0 +1,17 @@
+[Unit]
+Description=Nacos
+Documentation=https://nacos.io/
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+Environment="JAVA_HOME={{ java_home }}"
+WorkingDirectory=/opt/nacos
+ExecStart=/usr/bin/bash /opt/nacos/bin/startup.sh -m standalone
+ExecStop=/usr/bin/bash /opt/nacos/bin/shutdown.sh
+
+
+[Install]
+WantedBy=multi-user.target
