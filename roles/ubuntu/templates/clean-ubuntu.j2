@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-sudo apt-get autoremove -y
-sudo apt-get autoclean
-sudo apt-get clean
-sudo journalctl --vacuum-time=1d
-sudo find /var/log/ -name '*.gz' -delete
-sudo find /var/log/ -name '*.log.1' -delete
-sudo find /var/log/ -name 'syslog.1' -delete
-sudo find /var/log/ -name '*.zip' -delete
+sudo apt-get autoremove -y >> /dev/null 2>&1 || true
+sudo apt-get autoclean >> /dev/null 2>&1 || true
+sudo apt-get clean >> /dev/null 2>&1 || true
+sudo journalctl --vacuum-time=1d >> /dev/null 2>&1 || true
+sudo find /var/log/ -name '*.gz' -delete >> /dev/null 2>&1 || true
+sudo find /var/log/ -name '*.log.1' -delete >> /dev/null 2>&1 || true
+sudo find /var/log/ -name 'syslog.1' -delete >> /dev/null 2>&1 || true
+sudo find /var/log/ -name '*.zip' -delete >> /dev/null 2>&1 || true
+sudo docker image rm -f $(sudo docker image ls -f "dangling=true" -q) >> /dev/null 2>&1 || true
