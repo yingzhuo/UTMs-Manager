@@ -68,6 +68,12 @@ nacos:
     make setup-nacos
     make restart-nacos
 
+sentinel:
+    make startup-sentinel
+    make stop-sentinel
+    make setup-sentinel
+    make restart-sentinel
+
 OS:
     make setup-ubuntu
 ===========================================================

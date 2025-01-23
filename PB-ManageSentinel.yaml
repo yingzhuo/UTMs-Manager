@@ -1,0 +1,5 @@
+- name: "管理Dashboard"
+  hosts: "{{ HOSTS | default('sentinel') }}"
+  gather_facts: false
+  roles:
+    - role: sentinel

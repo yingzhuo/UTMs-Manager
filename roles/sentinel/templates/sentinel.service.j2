@@ -1,0 +1,19 @@
+[Unit]
+Description=sentinel
+Documentation=https://sentinelguard.io/zh-cn/docs/dashboard.html
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+Environment="JAVA_HOME={{ java_home }}"
+ExecStart={{ java_home }}/bin/java \
+    -Dserver.port=28080 \
+    -Dproject.name=sentinel-dashboard \
+    -jar /opt/sentinel/sentinel-dashboard-1.8.8.jar
+KillSignal=15
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

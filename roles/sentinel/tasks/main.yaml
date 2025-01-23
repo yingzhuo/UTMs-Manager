@@ -1,0 +1,58 @@
+- name: "检查tag"
+  ansible.builtin.debug:
+    msg: "[错误]没有指定tags"
+  when: "ansible_run_tags == ['all']"
+  failed_when: true
+
+###############################################################################
+
+- name: "保证安装目录"
+  ansible.builtin.file:
+    path: "{{ install_dir }}"
+    state: directory
+    owner: root
+    group: root
+  tags:
+    - setup
+
+- name: "拷贝服务定义文件"
+  ansible.builtin.template:
+    src: sentinel.service.j2
+    dest: /etc/systemd/system/sentinel.service
+    owner: root
+    group: root
+  notify:
+    - "重加载所有服务"
+    - "重启sentinel"
+  tags:
+    - setup
+
+###############################################################################
+
+- name: "启动sentinel"
+  ansible.builtin.service:
+    name: sentinel
+    state: started
+    enabled: true
+  tags:
+    - startup
+
+###############################################################################
+
+- name: "重启sentinel"
+  ansible.builtin.service:
+    name: sentinel
+    state: restarted
+    enabled: true
+  tags:
+    - restart
+
+###############################################################################
+
+- name: "关闭sentinel"
+  ansible.builtin.service:
+    name: sentinel
+    state: stopped
+    enabled: false
+  tags:
+    - stop

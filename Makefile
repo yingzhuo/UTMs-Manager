@@ -137,3 +137,15 @@ stop-nacos:
 
 restart-nacos:
 	@ansible-playbook $(CURDIR)/PB-ManageNacos.yaml --tags restart
+
+setup-sentinel:
+	@ansible-playbook $(CURDIR)/PB-ManageSentinel.yaml --tags setup
+
+startup-sentinel:
+	@ansible-playbook $(CURDIR)/PB-ManageSentinel.yaml --tags startup
+
+stop-sentinel:
+	@ansible-playbook $(CURDIR)/PB-ManageSentinel.yaml --tags stop
+
+restart-sentinel:
+	@ansible-playbook $(CURDIR)/PB-ManageSentinel.yaml --tags restart
