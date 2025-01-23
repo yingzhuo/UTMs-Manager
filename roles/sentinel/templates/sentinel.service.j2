@@ -11,6 +11,9 @@ Environment="JAVA_HOME={{ java_home }}"
 ExecStart={{ java_home }}/bin/java \
     -Dserver.port=28080 \
     -Dproject.name=sentinel-dashboard \
+    -Dauth.enabled=true \
+    -Dsentinel.dashboard.auth.username=sentinel \
+    -Dsentinel.dashboard.auth.password=sentinel \
     -jar /opt/sentinel/sentinel-dashboard-1.8.8.jar
 KillSignal=15
 SuccessExitStatus=143
