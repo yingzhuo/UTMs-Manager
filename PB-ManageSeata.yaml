@@ -1,0 +1,5 @@
+- name: "管理Seata"
+  hosts: "{{ HOSTS | default('seata') }}"
+  gather_facts: false
+  roles:
+    - role: seata

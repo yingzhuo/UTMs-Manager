@@ -1,0 +1,20 @@
+#!/bin/bash
+
+CURRENT_PID="${$}"
+JAVA_OPT="$JAVA_OPT -server -Xmixed"
+JAVA_OPT="$JAVA_OPT -Dlog.home={{ log_dir }}/seata"
+JAVA_OPT="$JAVA_OPT -Dloader.path=/opt/seata/lib"
+JAVA_OPT="$JAVA_OPT -Xmx2048m -Xms2048m -Xss640k -XX:SurvivorRatio=10"
+JAVA_OPT="$JAVA_OPT -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m"
+JAVA_OPT="$JAVA_OPT -XX:MaxDirectMemorySize=1024m -XX:-OmitStackTraceInFastThrow -XX:-UseAdaptiveSizePolicy"
+JAVA_OPT="$JAVA_OPT -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath={{ log_dir }}/java_heapdump.hprof"
+JAVA_OPT="$JAVA_OPT -XX:+DisableExplicitGC -Xlog:gc*:file={{ log_dir }}/seata_gc.log:time,tags:filecount=10,filesize=10M"
+JAVA_OPT="$JAVA_OPT -Dio.netty.leakDetectionLevel=advanced -Dapp.name=seata-server"
+JAVA_OPT="$JAVA_OPT -Dapp.pid=${CURRENT_PID}"
+JAVA_OPT="$JAVA_OPT -Dapp.home={{ install_dir }} -Dbasedir={{ install_dir }}"
+JAVA_OPT="$JAVA_OPT -Dspring.config.additional-location={{ install_dir }}/conf/"
+JAVA_OPT="$JAVA_OPT -Dspring.config.location={{ install_dir }}/conf/application.yml"
+JAVA_OPT="$JAVA_OPT -Dlogging.config={{ install_dir }}/conf/logback-spring.xml"
+JAVA_OPT="$JAVA_OPT -Dproduction.deploy.output=true"
+
+{{ java_home }}/bin/java $JAVA_OPT -jar {{ install_dir }}/target/seata-server.jar

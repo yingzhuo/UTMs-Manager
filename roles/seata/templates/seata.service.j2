@@ -1,0 +1,17 @@
+[Unit]
+Description=seata
+Documentation=https://seata.apache.org/docs/v2.1/overview/what-is-seata
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+Environment="JAVA_HOME={{ java_home }}"
+WorkingDirectory={{ install_dir }}
+ExecStart={{ install_dir }}/bin/startup.sh
+KillSignal=15
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

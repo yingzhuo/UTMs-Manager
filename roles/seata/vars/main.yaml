@@ -1,0 +1,3 @@
+java_home: /opt/java-home-17
+install_dir: /opt/seata
+log_dir: /var/log/seata
