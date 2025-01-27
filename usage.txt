@@ -74,6 +74,12 @@ sentinel:
     make setup-sentinel
     make restart-sentinel
 
+seata:
+    make startup-seata
+    make stop-seata
+    make setup-seata
+    make restart-seata
+
 OS:
     make setup-ubuntu
 ===========================================================

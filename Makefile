@@ -149,3 +149,15 @@ stop-sentinel:
 
 restart-sentinel:
 	@ansible-playbook $(CURDIR)/PB-ManageSentinel.yaml --tags restart
+
+setup-seata:
+	@ansible-playbook $(CURDIR)/PB-ManageSeata.yaml --tags setup
+
+startup-seata:
+	@ansible-playbook $(CURDIR)/PB-ManageSeata.yaml --tags startup
+
+stop-seata:
+	@ansible-playbook $(CURDIR)/PB-ManageSeata.yaml --tags stop
+
+restart-seata:
+	@ansible-playbook $(CURDIR)/PB-ManageSeata.yaml --tags restart
