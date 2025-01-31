@@ -1,7 +1,7 @@
 java_home: "/opt/java-home"
 
 app_name: "xxljob"
-app_version: "2.4.2"
+app_version: "2.5.0"
 
 app_home: "/opt/xxljob"
 app_config_dir: "/opt/xxljob/config"
